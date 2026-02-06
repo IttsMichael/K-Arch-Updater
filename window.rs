@@ -13,6 +13,8 @@ mod imp {
         #[template_child]
         pub label: TemplateChild<gtk::Label>,
         #[template_child]
+        pub update_list: TemplateChild<gtk::ListBox>,
+        #[template_child]
         pub update_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub refresh_button: TemplateChild<gtk::Button>,
@@ -28,6 +30,7 @@ mod imp {
                 update_button: TemplateChild::default(),
                 refresh_button: TemplateChild::default(),
                 clear_button: TemplateChild::default(),
+                update_list: TemplateChild::default(),
                 number: Cell::new(0),
             }
         }
@@ -62,10 +65,13 @@ mod imp {
                 let imp = obj.imp();
                 imp.label.set_text("Checking...");
                 
-                // 1. Standard Rust Channel
+                // Clear the existing list before starting a new check
+                while let Some(child) = imp.update_list.first_child() {
+                    imp.update_list.remove(&child);
+                }
+                
                 let (sender, receiver) = std::sync::mpsc::channel::<String>();
                 
-                // 2. Spawn the background command
                 std::thread::spawn(move || {
                     let output = std::process::Command::new("checkupdates").output();
                     let result = match output {
@@ -75,27 +81,40 @@ mod imp {
                     let _ = sender.send(result);
                 });
                 
-                // 3. Check for the result every 100ms
-                // We move the 'receiver' INTO this closure so it stays alive
                 glib::timeout_add_local(std::time::Duration::from_millis(100), glib::clone!(@weak obj => @default-return glib::ControlFlow::Break, move || {
-                    // Try to see if the thread sent the message yet
                     if let Ok(result_string) = receiver.try_recv() {
                         let imp = obj.imp();
                         
                         if result_string.trim().is_empty() {
                             imp.label.set_text("System up to date");
                         } else {
-                            imp.label.set_text(&result_string);
+                            imp.label.set_text("Updates found!");
+                            
+                            // --- NEW LIST POPULATION LOGIC ---
+                            for line in result_string.lines() {
+                                if !line.trim().is_empty() {
+                                    // Create a simple label for the row
+                                    let label = gtk::Label::builder()
+                                        .label(line)
+                                        .halign(gtk::Align::Start)
+                                        .margin_start(12)
+                                        .margin_top(6)
+                                        .margin_bottom(6)
+                                        .build();
+
+                                    // Add the label to the list
+                                    imp.update_list.append(&label);
+                                }
+                            }
                         }
-                        
-                        // STOP the timer (we got our answer)
                         glib::ControlFlow::Break
                     } else {
-                        // CONTINUE the timer (wait another 100ms)
                         glib::ControlFlow::Continue
                     }
                 }));
-}));
+            }));
+
+
         }
     }
 
