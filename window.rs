@@ -1,10 +1,12 @@
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
-use std::cell::Cell;
+use crate::update_manager::UpdateManager;
+use crate::update_row::UpdateRow;
 
 mod imp {
     use super::*;
+    use std::cell::Cell; // Moved here from top-level to keep Cell in scope
 
     #[derive(Debug, gtk::CompositeTemplate)]
     #[template(resource = "/org/gnome/Example/window.ui")]
@@ -21,6 +23,7 @@ mod imp {
         #[template_child]
         pub clear_button: TemplateChild<gtk::Button>,
         pub number: Cell<i32>,
+        pub refresh_sender: std::cell::OnceCell<std::sync::mpsc::Sender<()>>,
     }
 
     impl Default for UpdaterWindow {
@@ -32,6 +35,7 @@ mod imp {
                 clear_button: TemplateChild::default(),
                 update_list: TemplateChild::default(),
                 number: Cell::new(0),
+                refresh_sender: std::cell::OnceCell::new(),
             }
         }
     }
@@ -50,103 +54,24 @@ mod imp {
             obj.init_template();
         }
     }
-
+    
     impl ObjectImpl for UpdaterWindow {
         fn constructed(&self) {
             self.parent_constructed();
             let obj = self.obj();
-            
-            self.clear_button.connect_clicked(glib::clone!(@weak obj => move |_| {
-                let imp = obj.imp();
-                imp.label.set_text(" ");
 
-                while let Some(child) = imp.update_list.first_child() {
-                    imp.update_list.remove(&child);
+            let (sender, receiver) = std::sync::mpsc::channel::<()>();
+            self.refresh_sender.set(sender).expect("Sender already set");
+
+            glib::timeout_add_local(std::time::Duration::from_millis(500), glib::clone!(@weak obj => @default-return glib::ControlFlow::Break, move || {
+                if let Ok(_) = receiver.try_recv() {
+                    obj.check_for_updates();
                 }
+                glib::ControlFlow::Continue
             }));
 
-            self.refresh_button.connect_clicked(glib::clone!(@weak obj => move |_| {
-                let imp = obj.imp();
-                imp.label.set_text("Checking...");
-                
-                // Clear the existing list before starting a new check
-                while let Some(child) = imp.update_list.first_child() {
-                    imp.update_list.remove(&child);
-                }
-                
-                let (sender, receiver) = std::sync::mpsc::channel::<String>();
-                
-                std::thread::spawn(move || {
-                    let output = std::process::Command::new("checkupdates").output();
-                    let result = match output {
-                        Ok(res) => String::from_utf8_lossy(&res.stdout).to_string(),
-                        Err(_) => "Error".to_string(),
-                    };
-                    let _ = sender.send(result);
-                });
-                
-                glib::timeout_add_local(std::time::Duration::from_millis(100),
-                glib::clone!(@weak obj => @default-return glib::ControlFlow::Break, move || {
-                    if let Ok(result_string) = receiver.try_recv() {
-                        let imp = obj.imp();
-                        
-                        if result_string.trim().is_empty() {
-                            imp.label.set_text("System up to date");
-                        } else {
-                            imp.label.set_text("Updates found!");
-                            
-                           
-                            for line in result_string.lines() {
-                                if !line.trim().is_empty() {
-                                    
-                                    let row_box = gtk::Box::builder()
-                                        .orientation(gtk::Orientation::Horizontal)
-                                        .spacing(12)
-                                        .margin_start(12)
-                                        .margin_end(12)
-                                        .margin_top(6)
-                                        .margin_bottom(6)
-                                        .build();
-
-                                    let install_button = gtk::Button::builder()
-                                        .label("Update")
-                                        .valign(gtk::Align::Center)
-                                        .build();
-
-                                    let sep = " ";
-                                    let mut parts = line.split(' ');
-
-                                    let package = parts.next().unwrap_or("");
-                                    let version = parts.next_back().unwrap_or("");
-
-                                    println!("package: {} version: {}", package, version);
-
-                                    let display_text = format!("{:<130} {:>}", package, version);
-
-                                    let pkg_label = gtk::Label::builder()
-                                        .label(&format!("{} - {}", package, version))
-                                        .halign(gtk::Align::Start)
-                                        .hexpand(true) 
-                                        .build();
-
-                                    row_box.append(&pkg_label);
-                                    row_box.append(&install_button);
-
-                                    imp.update_list.append(&row_box);
-
-
-                                    
-                                }
-                            }
-                        }
-                        glib::ControlFlow::Break
-                    } else {
-                        glib::ControlFlow::Continue
-                    }
-                }));
-            }));
-
-
+            obj.setup_css();
+            obj.setup_callbacks();
         }
     }
 
@@ -166,5 +91,92 @@ impl UpdaterWindow {
         glib::Object::builder()
             .property("application", application)
             .build()
+    }
+
+    fn setup_css(&self) {
+        let provider = gtk::CssProvider::new();
+        provider.load_from_data(
+            ".non-selectable-item {
+                color: #000000ff;
+                background-color: #ffffffff;
+            }"
+        );
+        
+        gtk::style_context_add_provider_for_display(
+            &gtk::gdk::Display::default().unwrap(),
+            &provider,
+            gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+        );
+    }
+
+    fn setup_callbacks(&self) {
+        self.imp().clear_button.connect_clicked(glib::clone!(@weak self as obj => move |_| {
+            obj.clear_list();
+        }));
+
+        self.imp().refresh_button.connect_clicked(glib::clone!(@weak self as obj => move |_| {
+            obj.check_for_updates();
+        }));
+    }
+
+    fn clear_list(&self) {
+        let imp = self.imp();
+        imp.label.set_text(" ");
+        while let Some(child) = imp.update_list.first_child() {
+            imp.update_list.remove(&child);
+        }
+    }
+
+    fn check_for_updates(&self) {
+        let imp = self.imp();
+        imp.label.set_text("Checking...");
+        
+        // Clear the existing list before starting a new check
+        self.clear_list();
+        imp.label.set_text("Checking...");
+
+        let (sender, receiver) = std::sync::mpsc::channel::<String>();
+        UpdateManager::check_updates(sender);
+        
+        glib::timeout_add_local(std::time::Duration::from_millis(100),
+            glib::clone!(@weak self as obj => @default-return glib::ControlFlow::Break, move || {
+                if let Ok(result_string) = receiver.try_recv() {
+                    obj.handle_update_result(result_string);
+                    glib::ControlFlow::Break
+                } else {
+                    glib::ControlFlow::Continue
+                }
+            })
+        );
+    }
+
+    fn handle_update_result(&self, result_string: String) {
+        let imp = self.imp();
+        
+        if result_string.trim().is_empty() {
+            imp.label.set_text("System up to date");
+        } else {
+            imp.label.set_text("Updates found!");
+            
+            for line in result_string.lines() {
+                if !line.trim().is_empty() {
+                    let mut parts = line.split(' ');
+                    let package = parts.next().unwrap_or("");
+                    let version = parts.next_back().unwrap_or("");
+
+                    if !package.is_empty() {
+                        let sender = imp.refresh_sender.get().unwrap().clone();
+                        let row = UpdateRow::new(package, version, sender);
+                        imp.update_list.append(&row);
+
+                        if let Some(row) = imp.update_list.last_child().and_downcast::<gtk::ListBoxRow>() {
+                            row.set_activatable(false);
+                            row.set_selectable(false);
+                            row.add_css_class("non-selectable-item");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

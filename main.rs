@@ -21,6 +21,8 @@
 mod application;
 mod config;
 mod window;
+mod update_manager;
+mod update_row;
 
 use self::application::UpdaterApplication;
 use self::window::UpdaterWindow;
