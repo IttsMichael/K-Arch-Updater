@@ -1,35 +1,186 @@
+/* Black - Moss Green GTK4 Theme */
+
 /* Style the main window background */
 window {
-    background-color: #1e1e2e;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
 }
 
 /* Style all buttons */
 button {
+    background-color: #556b2f;
+    color: #ffffff;
+    font-weight: bold;
+    border: 1px solid #3d4f21;
     border-radius: 8px;
     padding: 8px 16px;
     transition: all 200ms ease;
 }
 
+button:hover {
+    background-color: #6b8e23;
+    border-color: #556b2f;
+}
+
+button:active {
+    background-color: #3d4f21;
+}
+
+button:disabled {
+    background-color: #2a2a2a;
+    color: #666666;
+    border-color: #1a1a1a;
+}
+
 /* Specific style for the Update button using its ID */
 #update_button {
-    background-color: #3584e4;
+    background-color: #6b8e23;
     color: white;
     font-weight: bold;
 }
 
 #update_button:hover {
-    background-color: #1c71d8;
+    background-color: #7fa32e;
+}
+
+#update_button:active {
+    background-color: #556b2f;
 }
 
 /* Style the ListBox to look more modern */
 list {
-    background-color: #242437;
-    border: 1px solid #3b3b51;
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
     border-radius: 12px;
+}
+
+listboxrow {
+    background-color: transparent;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+listboxrow:hover {
+    background-color: #252525;
+}
+
+listboxrow:selected {
+    background-color: #556b2f;
 }
 
 /* Style the text in your labels */
 label.title-1 {
-    color: #cdd6f4;
+    color: #e0e0e0;
     font-size: 24pt;
+}
+
+label {
+    color: #d0d0d0;
+}
+
+/* Entry fields */
+entry {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+entry:focus {
+    border-color: #6b8e23;
+}
+
+/* Scrollbars */
+scrollbar {
+    background-color: #0a0a0a;
+}
+
+scrollbar slider {
+    background-color: #3d4f21;
+    border-radius: 4px;
+    min-width: 12px;
+    min-height: 12px;
+}
+
+scrollbar slider:hover {
+    background-color: #556b2f;
+}
+
+/* Header bar */
+headerbar {
+    background-color: #0a0a0a;
+    border-bottom: 1px solid #2a2a2a;
+    color: #e0e0e0;
+}
+
+headerbar button {
+    background-color: transparent;
+    border: none;
+}
+
+headerbar button:hover {
+    background-color: #556b2f;
+}
+
+/* Menus */
+menu {
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+}
+
+menuitem {
+    color: #e0e0e0;
+    padding: 6px 12px;
+}
+
+menuitem:hover {
+    background-color: #556b2f;
+}
+
+/* Check and radio buttons */
+checkbutton, radiobutton {
+    color: #e0e0e0;
+}
+
+checkbutton check,
+radiobutton radio {
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+}
+
+checkbutton:checked check,
+radiobutton:checked radio {
+    background-color: #6b8e23;
+    border-color: #556b2f;
+}
+
+/* Progress bars */
+progressbar {
+    background-color: #1a1a1a;
+}
+
+progressbar progress {
+    background-color: #6b8e23;
+}
+
+/* Notebooks/Tabs */
+notebook > header {
+    background-color: #0a0a0a;
+}
+
+notebook > header > tabs > tab {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    padding: 8px 16px;
+    border: 1px solid #2a2a2a;
+}
+
+notebook > header > tabs > tab:checked {
+    background-color: #556b2f;
+}
+
+/* Separators */
+separator {
+    background-color: #2a2a2a;
 }
