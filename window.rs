@@ -95,10 +95,24 @@ mod imp {
                         } else {
                             imp.label.set_text("Updates found!");
                             
-                            // --- NEW LIST POPULATION LOGIC ---
+                           
                             for line in result_string.lines() {
                                 if !line.trim().is_empty() {
-                                
+                                    
+                                    let row_box = gtk::Box::builder()
+                                        .orientation(gtk::Orientation::Horizontal)
+                                        .spacing(12)
+                                        .margin_start(12)
+                                        .margin_end(12)
+                                        .margin_top(6)
+                                        .margin_bottom(6)
+                                        .build();
+
+                                    let install_button = gtk::Button::builder()
+                                        .label("Update")
+                                        .valign(gtk::Align::Center)
+                                        .build();
+
                                     let sep = " ";
                                     let mut parts = line.split(' ');
 
@@ -109,16 +123,19 @@ mod imp {
 
                                     let display_text = format!("{:<130} {:>}", package, version);
 
-                                    let label = gtk::Label::builder()
-                                        .label(&display_text)
+                                    let pkg_label = gtk::Label::builder()
+                                        .label(&format!("{} - {}", package, version))
                                         .halign(gtk::Align::Start)
-                                        .margin_start(12)
-                                        .margin_top(6)
-                                        .margin_bottom(6)
+                                        .hexpand(true) 
                                         .build();
 
-                                    // Add the label to the list
-                                    imp.update_list.append(&label);
+                                    row_box.append(&pkg_label);
+                                    row_box.append(&install_button);
+
+                                    imp.update_list.append(&row_box);
+
+
+                                    
                                 }
                             }
                         }
