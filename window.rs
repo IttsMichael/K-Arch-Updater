@@ -59,6 +59,10 @@ mod imp {
             self.clear_button.connect_clicked(glib::clone!(@weak obj => move |_| {
                 let imp = obj.imp();
                 imp.label.set_text(" ");
+
+                while let Some(child) = imp.update_list.first_child() {
+                    imp.update_list.remove(&child);
+                }
             }));
 
             self.refresh_button.connect_clicked(glib::clone!(@weak obj => move |_| {
@@ -81,7 +85,8 @@ mod imp {
                     let _ = sender.send(result);
                 });
                 
-                glib::timeout_add_local(std::time::Duration::from_millis(100), glib::clone!(@weak obj => @default-return glib::ControlFlow::Break, move || {
+                glib::timeout_add_local(std::time::Duration::from_millis(100),
+                glib::clone!(@weak obj => @default-return glib::ControlFlow::Break, move || {
                     if let Ok(result_string) = receiver.try_recv() {
                         let imp = obj.imp();
                         
@@ -93,9 +98,19 @@ mod imp {
                             // --- NEW LIST POPULATION LOGIC ---
                             for line in result_string.lines() {
                                 if !line.trim().is_empty() {
-                                    // Create a simple label for the row
+                                
+                                    let sep = " ";
+                                    let mut parts = line.split(' ');
+
+                                    let package = parts.next().unwrap_or("");
+                                    let version = parts.next_back().unwrap_or("");
+
+                                    println!("package: {} version: {}", package, version);
+
+                                    let display_text = format!("{:<130} {:>}", package, version);
+
                                     let label = gtk::Label::builder()
-                                        .label(line)
+                                        .label(&display_text)
                                         .halign(gtk::Align::Start)
                                         .margin_start(12)
                                         .margin_top(6)

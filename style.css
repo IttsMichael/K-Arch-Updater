@@ -1,0 +1,35 @@
+/* Style the main window background */
+window {
+    background-color: #1e1e2e;
+}
+
+/* Style all buttons */
+button {
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 200ms ease;
+}
+
+/* Specific style for the Update button using its ID */
+#update_button {
+    background-color: #3584e4;
+    color: white;
+    font-weight: bold;
+}
+
+#update_button:hover {
+    background-color: #1c71d8;
+}
+
+/* Style the ListBox to look more modern */
+list {
+    background-color: #242437;
+    border: 1px solid #3b3b51;
+    border-radius: 12px;
+}
+
+/* Style the text in your labels */
+label.title-1 {
+    color: #cdd6f4;
+    font-size: 24pt;
+}
