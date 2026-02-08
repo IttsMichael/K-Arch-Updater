@@ -3,6 +3,8 @@ use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 use crate::update_manager::UpdateManager;
 use crate::update_row::UpdateRow;
+use std::process::Command;
+use std::thread;
 
 mod imp {
     use super::*;
@@ -17,7 +19,7 @@ mod imp {
         #[template_child]
         pub update_list: TemplateChild<gtk::ListBox>,
         #[template_child]
-        pub update_button: TemplateChild<gtk::Button>,
+        pub updateall_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub refresh_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -30,7 +32,7 @@ mod imp {
         fn default() -> Self {
             Self {
                 label: TemplateChild::default(),
-                update_button: TemplateChild::default(),
+                updateall_button: TemplateChild::default(),
                 refresh_button: TemplateChild::default(),
                 clear_button: TemplateChild::default(),
                 update_list: TemplateChild::default(),
@@ -97,8 +99,8 @@ impl UpdaterWindow {
         let provider = gtk::CssProvider::new();
         provider.load_from_data(
             ".non-selectable-item {
-                color: #000000ff;
-                background-color: #ffffffff;
+                color: #ffffffff;
+                background-color: #1a1a1a;
             }"
         );
         
@@ -117,6 +119,10 @@ impl UpdaterWindow {
         self.imp().refresh_button.connect_clicked(glib::clone!(@weak self as obj => move |_| {
             obj.check_for_updates();
         }));
+
+        self.imp().updateall_button.connect_clicked(glib::clone!(@weak self as obj => move |_| {
+            obj.update_all();
+        }));
     }
 
     fn clear_list(&self) {
@@ -125,6 +131,30 @@ impl UpdaterWindow {
         while let Some(child) = imp.update_list.first_child() {
             imp.update_list.remove(&child);
         }
+    }
+
+    fn update_all(&self) {
+        let imp = self.imp();
+        imp.label.set_text("Updating All...");
+
+
+        println!("thread started for updating all");
+        thread::spawn(move || {
+            match Command::new("pkexec")
+                .args(["pacman", "y", "-Syu", "--noconfirm"])
+                .output()
+            {
+                Ok(output) => {
+                        println!("all packages updating");
+                        println!("Status: {}", output.status);
+                        println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
+                        println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                }
+                Err(e) => {
+                    eprintln!("Command failed to execute for");
+                }
+            }
+        });
     }
 
     fn check_for_updates(&self) {

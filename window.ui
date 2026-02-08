@@ -5,65 +5,45 @@
     <property name="title" translatable="yes">Updater</property>
     <property name="default-width">800</property>
     <property name="default-height">600</property>
-
     <property name="child">
-      <object class="GtkGrid">
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
-        <property name="column-spacing">12</property>
-        <property name="row-spacing">12</property>
-
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
         <property name="margin-start">12</property>
         <property name="margin-end">12</property>
         <property name="margin-top">12</property>
         <property name="margin-bottom">12</property>
-
+        
+        <!-- Button row -->
         <child>
-          <object class="GtkButton" id="clear_button">
-            <property name="label">Clear</property>
-            <property name="can_focus">False</property>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">12</property>
             <property name="halign">end</property>
-            <layout>
-              <property name="column">8</property>
-              <property name="row">0</property>
-            </layout>
+            <child>
+              <object class="GtkButton" id="clear_button">
+                <property name="label">Clear</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="refresh_button">
+                <property name="label">Refresh</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="updateall_button">
+                <property name="label">Update All</property>
+              </object>
+            </child>
           </object>
         </child>
-
-        <child>
-          <object class="GtkButton" id="refresh_button">
-            <property name="label">Refresh</property>
-            <property name="can_focus">False</property>
-            <property name="halign">end</property>
-            <layout>
-              <property name="column">9</property>
-              <property name="row">0</property>
-            </layout>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkButton" id="update_button">
-            <property name="label">Update</property>
-            <property name="can_focus">False</property>
-            <property name="halign">end</property>
-            <layout>
-              <property name="column">10</property>
-              <property name="row">0</property>
-            </layout>
-          </object>
-        </child>
-
+        
+        <!-- Scrolled list -->
         <child>
           <object class="GtkScrolledWindow">
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <property name="has-frame">True</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">1</property>
-              <property name="column-span">11</property>
-            </layout>
             <property name="child">
               <object class="GtkListBox" id="update_list">
                 <property name="selection-mode">none</property>
@@ -74,19 +54,14 @@
             </property>
           </object>
         </child>
-
+        
+        <!-- Status label -->
         <child>
           <object class="GtkLabel" id="label">
             <property name="label">Ready</property>
             <property name="halign">center</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">2</property>
-              <property name="column-span">11</property>
-            </layout>
           </object>
         </child>
-
       </object>
     </property>
   </template>

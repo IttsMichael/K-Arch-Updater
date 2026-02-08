@@ -29,7 +29,7 @@ use self::window::UpdaterWindow;
 
 use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
-use gtk::{gio, glib};
+use gtk::{gio, glib, gdk, CssProvider};
 use gtk::prelude::*;
 
 fn main() -> glib::ExitCode {
@@ -38,20 +38,25 @@ fn main() -> glib::ExitCode {
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8")
         .expect("Unable to set the text domain encoding");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain");
-
+    
     // Load resources
     let resources = gio::Resource::load(PKGDATADIR.to_owned() + "/updater.gresource")
         .expect("Could not load resources");
     gio::resources_register(&resources);
-
-    // Create a new GtkApplication. The application manages our main loop,
-    // application windows, integration with the window manager/compositor, and
-    // desktop features such as file opening and single-instance applications.
+    
+    // Create app FIRST
     let app = UpdaterApplication::new("org.gnome.Example", &gio::ApplicationFlags::empty());
-
-    // Run the application. This function will block until the application
-    // exits. Upon return, we have our exit code to return to the shell. (This
-    // is the code you see when you do `echo $?` after running a command in a
-    // terminal.
+    
+    // Load CSS after app is created
+    app.connect_startup(|_| {
+        let provider = CssProvider::new();
+        provider.load_from_path("data/style.css");
+        gtk::style_context_add_provider_for_display(
+            &gdk::Display::default().expect("Could not connect to display"),
+            &provider,
+            gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+        );
+    });
+    
     app.run()
 }

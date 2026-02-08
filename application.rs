@@ -22,6 +22,7 @@ use gettextrs::gettext;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
+use gtk::{gdk, CssProvider};
 
 use crate::config::VERSION;
 use crate::UpdaterWindow;
@@ -110,4 +111,5 @@ impl UpdaterApplication {
 
         about.present();
     }
+    
 }
