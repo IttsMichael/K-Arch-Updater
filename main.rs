@@ -50,13 +50,13 @@ fn main() -> glib::ExitCode {
     // Load CSS after app is created
     app.connect_startup(|_| {
         let provider = CssProvider::new();
-        provider.load_from_path("data/style.css");
+        provider.load_from_data(include_str!("../data/style.css"));
         gtk::style_context_add_provider_for_display(
             &gdk::Display::default().expect("Could not connect to display"),
             &provider,
             gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
         );
     });
-    
+            
     app.run()
 }

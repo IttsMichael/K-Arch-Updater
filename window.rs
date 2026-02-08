@@ -72,12 +72,15 @@ mod imp {
                 glib::ControlFlow::Continue
             }));
 
+            // obj.check_sudo();
+
             obj.setup_css();
             obj.setup_callbacks();
 
             obj.check_for_updates();
         }
     }
+
 
     impl WidgetImpl for UpdaterWindow {}
     impl WindowImpl for UpdaterWindow {}
@@ -213,6 +216,22 @@ impl UpdaterWindow {
             }
             child = row.next_sibling();
         }
+    }
+
+    fn check_sudo(&self) {
+        match Command::new("sudo")
+        .args(["echo", "hi"])
+        .output()
+        {
+            Ok(_) => {
+                println!("hihihih");
+            }
+
+            Err(e) => {
+                self.close()
+            }
+
+        } 
     }
 
     fn check_for_updates(&self) {
