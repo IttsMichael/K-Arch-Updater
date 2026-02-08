@@ -142,6 +142,7 @@ impl UpdaterWindow {
     fn update_all(&self) {
         let imp = self.imp();
         imp.label.set_text("Updating All...");
+        self.disable_all_row_buttons();
         imp.updateall_button.set_sensitive(false);
         println!("thread started for updating all");
         
@@ -194,6 +195,24 @@ impl UpdaterWindow {
         imp.label.set_text("Update Failed");
         imp.updateall_button.set_sensitive(true);
         self.clear_list();
+    }
+
+    fn disable_all_row_buttons(&self) {
+        let imp = self.imp();
+        let mut child = imp.update_list.first_child();
+        
+        while let Some(row) = child {
+            if let Some(box_widget) = row.first_child() {
+                let mut button_child = box_widget.first_child();
+                while let Some(widget) = button_child {
+                    if let Ok(button) = widget.clone().downcast::<gtk::Button>() {
+                        button.set_sensitive(false);
+                    }
+                    button_child = widget.next_sibling();
+                }
+            }
+            child = row.next_sibling();
+        }
     }
 
     fn check_for_updates(&self) {

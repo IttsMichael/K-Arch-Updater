@@ -80,5 +80,7 @@ impl UpdateRow {
 
         self.append(&pkg_label);
         self.append(&install_button);
+
+    
     }
 }
