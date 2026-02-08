@@ -25,6 +25,7 @@ mod imp {
         #[template_child]
         pub clear_button: TemplateChild<gtk::Button>,
         pub number: Cell<i32>,
+        pub updates_avaible: Cell<bool>,
         pub refresh_sender: std::cell::OnceCell<std::sync::mpsc::Sender<()>>,
     }
 
@@ -37,6 +38,7 @@ mod imp {
                 clear_button: TemplateChild::default(),
                 update_list: TemplateChild::default(),
                 number: Cell::new(0),
+                updates_avaible: Cell::new(false),
                 refresh_sender: std::cell::OnceCell::new(),
             }
         }
@@ -144,46 +146,56 @@ impl UpdaterWindow {
 
     fn update_all(&self) {
         let imp = self.imp();
-        imp.label.set_text("Updating All...");
-        self.disable_all_row_buttons();
-        imp.updateall_button.set_sensitive(false);
-        println!("thread started for updating all");
-        
-        let (sender, receiver) = std::sync::mpsc::channel();
-        
-        thread::spawn(move || {
-            match Command::new("pkexec")
-                .args(["pacman", "-Syu", "--noconfirm"])
-                .output()
-            {
-                Ok(output) => {
-                    println!("all packages updating");
-                    println!("Status: {}", output.status);
-                    println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
-                    println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
-                    sender.send(true).unwrap();
-                }
-                Err(e) => {
-                    eprintln!("Command failed to execute: {}", e);
-                    sender.send(false).unwrap();
-                }
-            }
-        });
-        
-        glib::timeout_add_local(std::time::Duration::from_millis(100), 
-            glib::clone!(@weak self as obj => @default-return glib::ControlFlow::Break, move || {
-                if let Ok(success) = receiver.try_recv() {
-                    if success {
-                        obj.success_update();
-                    } else {
-                        obj.failed_update();
+
+        if imp.updates_avaible.get() {
+
+            
+            imp.label.set_text("Updating All...");
+            self.disable_all_row_buttons();
+            imp.updateall_button.set_sensitive(false);
+            println!("thread started for updating all");
+            
+            let (sender, receiver) = std::sync::mpsc::channel();
+            
+            thread::spawn(move || {
+                match Command::new("pkexec")
+                    .args(["pacman", "-Syu", "--noconfirm"])
+                    .output()
+                {
+                    Ok(output) => {
+                        println!("all packages updating");
+                        println!("Status: {}", output.status);
+                        println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
+                        println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                        sender.send(true).unwrap();
                     }
-                    glib::ControlFlow::Break
-                } else {
-                    glib::ControlFlow::Continue
+                    Err(e) => {
+                        eprintln!("Command failed to execute: {}", e);
+                        sender.send(false).unwrap();
+                    }
                 }
-            })
-        );
+            });
+            
+            glib::timeout_add_local(std::time::Duration::from_millis(100), 
+                glib::clone!(@weak self as obj => @default-return glib::ControlFlow::Break, move || {
+                    if let Ok(success) = receiver.try_recv() {
+                        if success {
+                            obj.success_update();
+                        } else {
+                            obj.failed_update();
+                        }
+                        glib::ControlFlow::Break
+                    } else {
+                        glib::ControlFlow::Continue
+                    }
+                })
+            );    
+        }
+        
+        else {
+            println!("System is up to date");
+            imp.label.set_text("System is up to date, press refresh to check for updates");
+        }
     }
 
     fn success_update(&self) {
@@ -262,8 +274,10 @@ impl UpdaterWindow {
         
         if result_string.trim().is_empty() {
             imp.label.set_text("System up to date");
+            imp.updates_avaible.set(false);
         } else {
             imp.label.set_text("Updates found!");
+            imp.updates_avaible.set(true);
             
             for line in result_string.lines() {
                 if !line.trim().is_empty() {
