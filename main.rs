@@ -25,11 +25,9 @@ mod update_manager;
 mod update_row;
 
 use self::application::UpdaterApplication;
-use self::window::UpdaterWindow;
-
-use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
+use config::{GETTEXT_PACKAGE, LOCALEDIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
-use gtk::{gio, glib, gdk, CssProvider};
+use gtk::{gio, glib};
 use gtk::prelude::*;
 
 fn main() -> glib::ExitCode {
@@ -39,20 +37,24 @@ fn main() -> glib::ExitCode {
         .expect("Unable to set the text domain encoding");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain");
     
-    // Load resources
-    let resources = gio::Resource::load(PKGDATADIR.to_owned() + "/updater.gresource")
-        .expect("Could not load resources");
+    // --- PERMANENT RESOURCE FIX ---
+    // include_bytes! bakes the file into your binary.
+    // Ensure src/updater.gresource exists before running meson/ninja.
+    let resource_data = include_bytes!("updater.gresource");
+    let resource_bytes = glib::Bytes::from_static(resource_data);
+    let resources = gio::Resource::from_data(&resource_bytes)
+        .expect("Could not load embedded resources");
     gio::resources_register(&resources);
     
-    // Create app FIRST
+    // Create app
     let app = UpdaterApplication::new("org.gnome.Example", &gio::ApplicationFlags::empty());
     
     // Load CSS after app is created
     app.connect_startup(|_| {
-        let provider = CssProvider::new();
+        let provider = gtk::CssProvider::new();
         provider.load_from_data(include_str!("../data/style.css"));
         gtk::style_context_add_provider_for_display(
-            &gdk::Display::default().expect("Could not connect to display"),
+            &gtk::gdk::Display::default().expect("Could not connect to display"),
             &provider,
             gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
         );

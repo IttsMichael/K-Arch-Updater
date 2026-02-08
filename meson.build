@@ -1,7 +1,8 @@
 pkgdatadir = get_option('prefix') / get_option('datadir') / meson.project_name()
 gnome = import('gnome')
 
-gnome.compile_resources('updater',
+# 1. Compile the resources
+resources = gnome.compile_resources('updater',
   'updater.gresource.xml',
   gresource_bundle: true,
   install: true,
@@ -20,11 +21,20 @@ configure_file(
     configuration: conf
 )
 
-# Copy the config.rs output to the source directory.
+# 2. Copy config.rs to source directory (Your existing logic)
 run_command(
   'cp',
   meson.project_build_root() / 'src' / 'config.rs',
   meson.project_source_root() / 'src' / 'config.rs',
+  check: true
+)
+
+# 3. NEW: Copy the compiled gresource to the source directory 
+# This allows gio::resources_register_include!("updater.gresource") in main.rs to find it.
+run_command(
+  'cp',
+  meson.project_build_root() / 'src' / 'updater.gresource',
+  meson.project_source_root() / 'src' / 'updater.gresource',
   check: true
 )
 

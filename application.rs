@@ -25,7 +25,7 @@ use gtk::{gio, glib};
 use gtk::{gdk, CssProvider};
 
 use crate::config::VERSION;
-use crate::UpdaterWindow;
+use crate::window::UpdaterWindow;
 
 mod imp {
     use super::*;
