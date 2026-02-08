@@ -72,9 +72,10 @@ impl UpdateRow {
 
         if let Some(sender) = imp.on_refresh.borrow().as_ref() {
             let sender = sender.clone();
-            install_button.connect_clicked(move |_| {
+            install_button.connect_clicked(glib::clone!(@weak install_button => move |_| {
+                install_button.set_label("Updating...");
                 UpdateManager::install_package(package.clone(), sender.clone());
-            });
+            }));
         }
 
         self.append(&pkg_label);

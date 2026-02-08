@@ -74,6 +74,8 @@ mod imp {
 
             obj.setup_css();
             obj.setup_callbacks();
+
+            obj.check_for_updates();
         }
     }
 
@@ -99,8 +101,12 @@ impl UpdaterWindow {
         let provider = gtk::CssProvider::new();
         provider.load_from_data(
             ".non-selectable-item {
-                color: #ffffffff;
+                color: #e8e8e8;
                 background-color: #1a1a1a;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                margin: 4px 12px;
+                padding: 8px 10px;
             }"
         );
         
@@ -127,34 +133,67 @@ impl UpdaterWindow {
 
     fn clear_list(&self) {
         let imp = self.imp();
-        imp.label.set_text(" ");
         while let Some(child) = imp.update_list.first_child() {
             imp.update_list.remove(&child);
         }
     }
 
+
     fn update_all(&self) {
         let imp = self.imp();
         imp.label.set_text("Updating All...");
-
-
+        imp.updateall_button.set_sensitive(false);
         println!("thread started for updating all");
+        
+        let (sender, receiver) = std::sync::mpsc::channel();
+        
         thread::spawn(move || {
             match Command::new("pkexec")
-                .args(["pacman", "y", "-Syu", "--noconfirm"])
+                .args(["pacman", "-Syu", "--noconfirm"])
                 .output()
             {
                 Ok(output) => {
-                        println!("all packages updating");
-                        println!("Status: {}", output.status);
-                        println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
-                        println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                    println!("all packages updating");
+                    println!("Status: {}", output.status);
+                    println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
+                    println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                    sender.send(true).unwrap();
                 }
                 Err(e) => {
-                    eprintln!("Command failed to execute for");
+                    eprintln!("Command failed to execute: {}", e);
+                    sender.send(false).unwrap();
                 }
             }
         });
+        
+        glib::timeout_add_local(std::time::Duration::from_millis(100), 
+            glib::clone!(@weak self as obj => @default-return glib::ControlFlow::Break, move || {
+                if let Ok(success) = receiver.try_recv() {
+                    if success {
+                        obj.success_update();
+                    } else {
+                        obj.failed_update();
+                    }
+                    glib::ControlFlow::Break
+                } else {
+                    glib::ControlFlow::Continue
+                }
+            })
+        );
+    }
+
+    fn success_update(&self) {
+        let imp = self.imp();
+        imp.label.set_text("Update Successful");
+        imp.updateall_button.set_sensitive(true);
+        self.clear_list();
+    }
+
+    fn failed_update(&self) {
+        let imp = self.imp();
+        imp.label.set_text("Update Failed");
+        imp.updateall_button.set_sensitive(true);
+        self.clear_list();
     }
 
     fn check_for_updates(&self) {
