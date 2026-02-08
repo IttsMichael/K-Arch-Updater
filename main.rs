@@ -1,6 +1,6 @@
 /* main.rs
  *
- * Copyright 2026 Unknown
+ * Copyright 2026 IttsMichael
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,7 @@ fn main() -> glib::ExitCode {
         .expect("Unable to set the text domain encoding");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain");
     
-    // --- PERMANENT RESOURCE FIX ---
-    // include_bytes! bakes the file into your binary.
-    // Ensure src/updater.gresource exists before running meson/ninja.
+    
     let resource_data = include_bytes!("updater.gresource");
     let resource_bytes = glib::Bytes::from_static(resource_data);
     let resources = gio::Resource::from_data(&resource_bytes)
