@@ -22,7 +22,7 @@
             <property name="halign">end</property>
             <child>
               <object class="GtkButton" id="clear_button">
-                <property name="label">Caaaa</property>
+                <property name="label">aaaa</property>
               </object>
             </child>
             <child>
@@ -32,7 +32,7 @@
             </child>
             <child>
               <object class="GtkButton" id="updateall_button">
-                <property name="label">Updateadad All</property>
+                <property name="label">Update All</property>
               </object>
             </child>
           </object>

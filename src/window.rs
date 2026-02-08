@@ -194,7 +194,8 @@ impl UpdaterWindow {
         
         else {
             println!("System is up to date");
-            imp.label.set_text("System is up to date, press refresh to check for updates");
+            imp.label.set_text("System is up to date, checking for new updates...");
+            self.check_for_updates();
         }
     }
 
@@ -248,11 +249,11 @@ impl UpdaterWindow {
 
     fn check_for_updates(&self) {
         let imp = self.imp();
-        imp.label.set_text("Checking...");
+        imp.label.set_text("Cheasddsacking...");
         
         // Clear the existing list before starting a new check
         self.clear_list();
-        imp.label.set_text("Checking...");
+        imp.label.set_text("Checkiasdsadng...");
 
         let (sender, receiver) = std::sync::mpsc::channel::<String>();
         UpdateManager::check_updates(sender);

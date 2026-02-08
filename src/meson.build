@@ -31,12 +31,7 @@ run_command(
 
 # 3. NEW: Copy the compiled gresource to the source directory 
 # This allows gio::resources_register_include!("updater.gresource") in main.rs to find it.
-run_command(
-  'cp',
-  meson.project_build_root() / 'src' / 'updater.gresource',
-  meson.project_source_root() / 'src' / 'updater.gresource',
-  check: true
-)
+
 
 cargo_bin  = find_program('cargo')
 cargo_opt  = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
