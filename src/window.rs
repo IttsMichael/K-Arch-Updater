@@ -243,11 +243,11 @@ impl UpdaterWindow {
 
     fn check_for_updates(&self) {
         let imp = self.imp();
-        imp.label.set_text("Cheasddsacking...");
+        imp.label.set_text("Checking...");
         
         // Clear the existing list before starting a new check
         self.clear_list();
-        imp.label.set_text("Checkiasdsadng...");
+        imp.label.set_text("Checking...");
 
         let (sender, receiver) = std::sync::mpsc::channel::<String>();
         UpdateManager::check_updates(sender);
