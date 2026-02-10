@@ -98,14 +98,14 @@ impl UpdaterNewApplication {
     fn show_about(&self) {
         let window = self.active_window().unwrap();
         let about = adw::AboutDialog::builder()
-            .application_name("updater-new")
+            .application_name("updater")
             .application_icon("org.gnome.Example")
-            .developer_name("Unknown")
+            .developer_name("IttsMichael")
             .version(VERSION)
-            .developers(vec!["Unknown"])
+            .developers(vec!["IttsMichael"])
             // Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
             .translator_credits(&gettext("translator-credits"))
-            .copyright("© 2026 Unknown")
+            .copyright("© 2026 IttsMichael")
             .build();
 
         about.present(Some(&window));
