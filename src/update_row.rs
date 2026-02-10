@@ -70,11 +70,24 @@ impl UpdateRow {
             .valign(gtk::Align::Center)
             .build();
 
-        if let Some(sender) = imp.on_refresh.borrow().as_ref() {
-            let sender = sender.clone();
+        let (tx, rx) = std::sync::mpsc::channel::<()>();
+
+        if let Some(on_refresh) = imp.on_refresh.borrow().as_ref() {
+            let on_refresh = on_refresh.clone();
             install_button.connect_clicked(glib::clone!(@weak install_button => move |_| {
                 install_button.set_label("Updating...");
-                UpdateManager::install_package(package.clone(), sender.clone());
+                install_button.set_sensitive(false);
+                UpdateManager::install_package(package.clone(), tx.clone());
+            }));
+
+            glib::timeout_add_local(std::time::Duration::from_millis(100), glib::clone!(@weak install_button => @default-return glib::ControlFlow::Break, move || {
+                if let Ok(_) = rx.try_recv() {
+                    install_button.set_label("Update");
+                    install_button.set_sensitive(true);
+                    let _ = on_refresh.send(()); // Trigger global refresh
+                    return glib::ControlFlow::Break;
+                }
+                glib::ControlFlow::Continue
             }));
         }
 
