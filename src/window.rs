@@ -1,5 +1,7 @@
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
+use adw::prelude::*;
+use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 use crate::update_manager::UpdateManager;
 use crate::update_row::UpdateRow;
@@ -48,7 +50,7 @@ mod imp {
     impl ObjectSubclass for UpdaterWindow {
         const NAME: &'static str = "UpdaterWindow";
         type Type = super::UpdaterWindow;
-        type ParentType = gtk::ApplicationWindow;
+        type ParentType = adw::ApplicationWindow;
 
         fn class_init(klass: &mut Self::Class) {
             klass.bind_template();
@@ -87,11 +89,12 @@ mod imp {
     impl WidgetImpl for UpdaterWindow {}
     impl WindowImpl for UpdaterWindow {}
     impl ApplicationWindowImpl for UpdaterWindow {}
+    impl AdwApplicationWindowImpl for UpdaterWindow {}
 }
 
 glib::wrapper! {
     pub struct UpdaterWindow(ObjectSubclass<imp::UpdaterWindow>)
-        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow,
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
@@ -104,16 +107,7 @@ impl UpdaterWindow {
 
     fn setup_css(&self) {
         let provider = gtk::CssProvider::new();
-        provider.load_from_data(
-            ".non-selectable-item {
-                color: #e8e8e8;
-                background-color: #1a1a1a;
-                border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-                margin: 4px 12px;
-                padding: 8px 10px;
-            }"
-        );
+        provider.load_from_resource("/org/gnome/Example/style.css");
         
         gtk::style_context_add_provider_for_display(
             &gtk::gdk::Display::default().unwrap(),

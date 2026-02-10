@@ -6,7 +6,7 @@
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable"
     ],
-    "command" : "updater",
+    "command" : "updater-new",
     "finish-args" : [
         "--share=network",
         "--share=ipc",
@@ -21,7 +21,7 @@
         ],
         "env" : {
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "updater=debug"
+            "RUST_LOG" : "updater-new=debug"
         }
     },
     "cleanup" : [
@@ -37,7 +37,7 @@
     ],
     "modules" : [
         {
-            "name" : "updater",
+            "name" : "updater-new",
             "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [

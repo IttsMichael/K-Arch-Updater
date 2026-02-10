@@ -1,1 +1,1 @@
-i18n.gettext('updater', preset: 'glib')
+i18n.gettext('updater-new', preset: 'glib')

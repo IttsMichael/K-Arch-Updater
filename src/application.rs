@@ -19,10 +19,9 @@
  */
 
 use gettextrs::gettext;
-use gtk::prelude::*;
-use gtk::subclass::prelude::*;
+use adw::prelude::*;
+use adw::subclass::prelude::*;
 use gtk::{gio, glib};
-use gtk::{gdk, CssProvider};
 
 use crate::config::VERSION;
 use crate::window::UpdaterWindow;
@@ -31,16 +30,16 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct UpdaterApplication {}
+    pub struct UpdaterNewApplication {}
 
     #[glib::object_subclass]
-    impl ObjectSubclass for UpdaterApplication {
-        const NAME: &'static str = "UpdaterApplication";
-        type Type = super::UpdaterApplication;
-        type ParentType = gtk::Application;
+    impl ObjectSubclass for UpdaterNewApplication {
+        const NAME: &'static str = "UpdaterNewApplication";
+        type Type = super::UpdaterNewApplication;
+        type ParentType = adw::Application;
     }
 
-    impl ObjectImpl for UpdaterApplication {
+    impl ObjectImpl for UpdaterNewApplication {
         fn constructed(&self) {
             self.parent_constructed();
             let obj = self.obj();
@@ -49,7 +48,7 @@ mod imp {
         }
     }
 
-    impl ApplicationImpl for UpdaterApplication {
+    impl ApplicationImpl for UpdaterNewApplication {
         // We connect to the activate callback to create a window when the application
         // has been launched. Additionally, this callback notifies us when the user
         // tries to launch a "second instance" of the application. When they try
@@ -67,16 +66,17 @@ mod imp {
         }
     }
 
-    impl GtkApplicationImpl for UpdaterApplication {}
-    }
+    impl GtkApplicationImpl for UpdaterNewApplication {}
+    impl AdwApplicationImpl for UpdaterNewApplication {}
+}
 
 glib::wrapper! {
-    pub struct UpdaterApplication(ObjectSubclass<imp::UpdaterApplication>)
-        @extends gio::Application, gtk::Application, 
+    pub struct UpdaterNewApplication(ObjectSubclass<imp::UpdaterNewApplication>)
+        @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionGroup, gio::ActionMap;
 }
 
-impl UpdaterApplication {
+impl UpdaterNewApplication {
     pub fn new(application_id: &str, flags: &gio::ApplicationFlags) -> Self {
         glib::Object::builder()
             .property("application-id", application_id)
@@ -97,19 +97,17 @@ impl UpdaterApplication {
 
     fn show_about(&self) {
         let window = self.active_window().unwrap();
-        let about = gtk::AboutDialog::builder()
-            .transient_for(&window)
-            .modal(true)
-            .program_name("updater")
-            .logo_icon_name("org.gnome.Example")
+        let about = adw::AboutDialog::builder()
+            .application_name("updater-new")
+            .application_icon("org.gnome.Example")
+            .developer_name("Unknown")
             .version(VERSION)
-            .authors(vec!["Unknown"])
-            // Translators: Replace translator-credits with your name/username, and optionally an email or URL.
+            .developers(vec!["Unknown"])
+            // Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
             .translator_credits(&gettext("translator-credits"))
             .copyright("© 2026 Unknown")
             .build();
 
-        about.present();
+        about.present(Some(&window));
     }
-    
 }

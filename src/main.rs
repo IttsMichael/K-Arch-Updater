@@ -1,6 +1,6 @@
 /* main.rs
  *
- * Copyright 2026 IttsMichael
+ * Copyright 2026 Unknown
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,14 @@
 
 mod application;
 mod config;
-mod window;
 mod update_manager;
 mod update_row;
+mod window;
 
-use self::application::UpdaterApplication;
-use config::{GETTEXT_PACKAGE, LOCALEDIR};
+use self::application::UpdaterNewApplication;
+use self::window::UpdaterWindow;
+
+use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::{gio, glib};
 use gtk::prelude::*;
@@ -36,27 +38,20 @@ fn main() -> glib::ExitCode {
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8")
         .expect("Unable to set the text domain encoding");
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain");
-    
-    
-    let resource_data = include_bytes!("updater.gresource");
-    let resource_bytes = glib::Bytes::from_static(resource_data);
-    let resources = gio::Resource::from_data(&resource_bytes)
-        .expect("Could not load embedded resources");
+
+    // Load resources
+    let resources = gio::Resource::load(PKGDATADIR.to_owned() + "/updater-new.gresource")
+        .expect("Could not load resources");
     gio::resources_register(&resources);
-    
-    // Create app
-    let app = UpdaterApplication::new("org.gnome.Example", &gio::ApplicationFlags::empty());
-    
-    // Load CSS after app is created
-    app.connect_startup(|_| {
-        let provider = gtk::CssProvider::new();
-        provider.load_from_data(include_str!("../data/style.css"));
-        gtk::style_context_add_provider_for_display(
-            &gtk::gdk::Display::default().expect("Could not connect to display"),
-            &provider,
-            gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-        );
-    });
-            
+
+    // Create a new GtkApplication. The application manages our main loop,
+    // application windows, integration with the window manager/compositor, and
+    // desktop features such as file opening and single-instance applications.
+    let app = UpdaterNewApplication::new("org.gnome.Example", &gio::ApplicationFlags::empty());
+
+    // Run the application. This function will block until the application
+    // exits. Upon return, we have our exit code to return to the shell. (This
+    // is the code you see when you do `echo $?` after running a command in a
+    // terminal.
     app.run()
 }

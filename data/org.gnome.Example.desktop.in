@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=updater
-Exec=updater
+Name=updater-new
+Exec=updater-new
 Icon=org.gnome.Example
 Terminal=false
 Type=Application
