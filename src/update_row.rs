@@ -89,7 +89,7 @@ impl UpdateRow {
                     if status == "Ok" {
                         install_button.set_label("Update");
                         println!("Successfull");
-                        // imp.label.set_text("Success");
+                        // imp.label.set_text("Success"); 
                         install_button.set_sensitive(true);
                         install_button.unparent();
                         pkg_label.unparent();
