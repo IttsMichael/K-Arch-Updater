@@ -295,4 +295,5 @@ impl UpdaterWindow {
             }
         }
     }
+
 }

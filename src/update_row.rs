@@ -70,7 +70,7 @@ impl UpdateRow {
             .valign(gtk::Align::Center)
             .build();
 
-        let (tx, rx) = std::sync::mpsc::channel::<()>();
+        let (tx, rx) = std::sync::mpsc::channel::<String>();
 
         if let Some(on_refresh) = imp.on_refresh.borrow().as_ref() {
             let on_refresh = on_refresh.clone();
@@ -80,12 +80,28 @@ impl UpdateRow {
                 UpdateManager::install_package(package.clone(), tx.clone());
             }));
 
-            glib::timeout_add_local(std::time::Duration::from_millis(100), glib::clone!(@weak install_button => @default-return glib::ControlFlow::Break, move || {
-                if let Ok(_) = rx.try_recv() {
-                    install_button.set_label("Update");
-                    install_button.set_sensitive(true);
-                    let _ = on_refresh.send(()); // Trigger global refresh
-                    return glib::ControlFlow::Break;
+            glib::timeout_add_local(std::time::Duration::from_millis(100), glib::clone!(
+                @weak install_button,
+                @weak pkg_label => @default-return glib::ControlFlow::Break, move || {
+
+                if let Ok(status) = rx.try_recv() {
+
+                    if status == "Ok" {
+                        install_button.set_label("Update");
+                        println!("Successfull");
+                        // imp.label.set_text("Success");
+                        install_button.set_sensitive(true);
+                        install_button.unparent();
+                        pkg_label.unparent();
+                        return glib::ControlFlow::Break;
+                    }
+
+                    else {
+                        install_button.set_label("Update");
+                        println!("Failed");
+                        install_button.set_sensitive(true);
+                        let _ = on_refresh.send(()); 
+                    }
                 }
                 glib::ControlFlow::Continue
             }));
@@ -96,4 +112,5 @@ impl UpdateRow {
 
     
     }
+
 }

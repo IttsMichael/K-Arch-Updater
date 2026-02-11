@@ -16,7 +16,7 @@ impl UpdateManager {
         });
     }
 
-    pub fn install_package(pkg: String, sender: mpsc::Sender<()>) {
+    pub fn install_package(pkg: String, sender: mpsc::Sender<String>) {
         println!("Thread started for: {}", pkg);
         thread::spawn(move || {
             match Command::new("pkexec")
@@ -28,12 +28,14 @@ impl UpdateManager {
                     println!("Status: {}", output.status);
                     println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
                     println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                    sender.send(("Ok").to_string());
                 }
                 Err(e) => {
                     eprintln!("Command failed to execute for {}: {}", pkg, e);
+                    sender.send(("Err").to_string());
                 }
             }
-            let _ = sender.send(());
+            
         });
     }
 }
