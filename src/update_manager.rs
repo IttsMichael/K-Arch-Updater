@@ -24,18 +24,23 @@ impl UpdateManager {
                 .output()
             {
                 Ok(output) => {
-                    println!("Command executed for {}", pkg);
-                    println!("Status: {}", output.status);
-                    println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
-                    println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
-                    sender.send(("Ok").to_string());
+                  
+                    if output.status.success() {
+                        println!("Success: {} installed.", pkg);
+                        sender.send("Ok".to_string()).unwrap();
+                    } else {
+                       
+                        eprintln!("Command ran but failed with exit code: {}", output.status);
+                        eprintln!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                        sender.send("Err".to_string()).unwrap();
+                    }
                 }
                 Err(e) => {
-                    eprintln!("Command failed to execute for {}: {}", pkg, e);
-                    sender.send(("Err").to_string());
+                  
+                    eprintln!("Failed to even launch pkexec: {}", e);
+                    sender.send("Err".to_string()).unwrap();
                 }
             }
-            
         });
     }
 }

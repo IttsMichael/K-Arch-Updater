@@ -74,7 +74,10 @@ impl UpdateRow {
 
         if let Some(on_refresh) = imp.on_refresh.borrow().as_ref() {
             let on_refresh = on_refresh.clone();
-            install_button.connect_clicked(glib::clone!(@weak install_button => move |_| {
+            install_button.connect_clicked(glib::clone!(@weak install_button,
+                @strong package,
+                @strong version,
+                 => move |_| {
                 install_button.set_label("Updating...");
                 install_button.set_sensitive(false);
                 UpdateManager::install_package(package.clone(), tx.clone());
@@ -82,6 +85,8 @@ impl UpdateRow {
 
             glib::timeout_add_local(std::time::Duration::from_millis(100), glib::clone!(
                 @weak install_button,
+                @strong package,
+                @strong version,
                 @weak pkg_label => @default-return glib::ControlFlow::Break, move || {
 
                 if let Ok(status) = rx.try_recv() {
@@ -97,10 +102,11 @@ impl UpdateRow {
                     }
 
                     else {
+                        pkg_label.set_text(&format!("{} - Error, read the log", package));
                         install_button.set_label("Update");
                         println!("Failed");
                         install_button.set_sensitive(true);
-                        let _ = on_refresh.send(()); 
+                        // let _ = on_refresh.send(()); 
                     }
                 }
                 glib::ControlFlow::Continue

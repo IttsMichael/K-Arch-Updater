@@ -1,219 +1,592 @@
 /* ============================================================
-   WARM MOSS — GTK4 Cozy Theme
-   Palette: Warm dark browns, gentle moss green accents, soft ivory
-   Aesthetic: Cozy, organic, rounded — like a forest cabin at dusk
+   SLATE & SKY — GTK4 Theme
+   Palette: Neutral slate charcoal, dark moss green, sky blue
    ============================================================ */
+
+/* ── Global Transitions ──────────────────────────────────────── */
+* {
+    transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
 /* ── Window ─────────────────────────────────────────────────── */
 window {
-    background-color: #1a1612;
-    color: #f5f0e8;
-}
-
-/* ── Buttons ─────────────────────────────────────────────────── */
-button {
-    background: #2a2620;
-    color: #f5f0e8;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    border: 1px solid rgba(107, 142, 35, 0.25);
-    border-radius: 9999px;
-    padding: 12px 24px;
-    transition: all 220ms cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
-}
-
-button:hover {
-    background: linear-gradient(135deg, #2e2a24 0%, rgba(107, 142, 35, 0.12) 100%);
-    border-color: rgba(107, 142, 35, 0.45);
-    box-shadow: 0 4px 16px rgba(107, 142, 35, 0.15), 0 2px 8px rgba(0, 0, 0, 0.15);
-    color: #8ab32a;
-    transform: translateY(-1px);
-}
-
-button:active {
-    background: #1f1b15;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-    border-color: rgba(107, 142, 35, 0.25);
-    color: #6b8e23;
-    transform: translateY(0);
-}
-
-button:disabled {
-    background: #221e18;
-    color: #4a4a55;
-    border-color: rgba(255, 255, 255, 0.04);
-    box-shadow: none;
-}
-
-/* ── Accent / Primary Button ─────────────────────────────────── */
-#update_button,
-button.suggested-action {
-    background: linear-gradient(155deg, #6b8e23 0%, #567a1a 50%, #3d5614 100%);
-    color: #1a1612;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    border: 1px solid rgba(138, 179, 42, 0.35);
-    box-shadow: 0 4px 20px rgba(107, 142, 35, 0.25);
-}
-
-#update_button:hover,
-button.suggested-action:hover {
-    background: linear-gradient(155deg, #8ab32a 0%, #6b8e23 50%, #567a1a 100%);
-    box-shadow: 0 6px 28px rgba(107, 142, 35, 0.35), 0 0 20px rgba(107, 142, 35, 0.20);
-    color: #0f0f0f;
-    transform: translateY(-1px);
-}
-
-#update_button:active,
-button.suggested-action:active {
-    background: linear-gradient(155deg, #4a6318 0%, #2e4010 100%);
-    box-shadow: 0 2px 8px rgba(107, 142, 35, 0.20);
-    transform: translateY(0);
-}
-
-/* ── Destructive Button ──────────────────────────────────────── */
-button.destructive-action {
-    background: #2a1c1a;
-    border-color: rgba(220, 70, 60, 0.30);
-    color: #d89080;
-}
-
-button.destructive-action:hover {
-    border-color: rgba(220, 70, 60, 0.45);
-    color: #e8a898;
-    box-shadow: 0 4px 16px rgba(220, 70, 60, 0.20);
-}
-
-/* ── List & Rows ─────────────────────────────────────────────── */
-list {
-    background-color: transparent;
-    border: none;
-    padding: 6px 4px;
-}
-
-listboxrow {
-    background-color: #282420;
-    border: none;
-    border-radius: 20px;
-    margin: 10px 16px;
-    padding: 18px 22px;
-    transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.20), 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-listboxrow:hover {
-    background-color: #2e2a24;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-listboxrow:selected {
-    background: rgba(107, 142, 35, 0.20);
-    border: 1px solid rgba(107, 142, 35, 0.35);
-    box-shadow: 0 4px 20px rgba(107, 142, 35, 0.25), 0 2px 8px rgba(0, 0, 0, 0.15);
-    color: #8ab32a;
-}
-
-/* ── Labels ──────────────────────────────────────────────────── */
-label {
-    color: #d8d0c8;
-}
-
-label.title-1 {
-    color: #f5f0e8;
-    font-size: 24pt;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-
-label.title-2 {
-    color: #f0ebe3;
-    font-size: 18pt;
-    font-weight: 600;
-}
-
-label.title-3 {
-    color: #6b8e23;
-    font-size: 13pt;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-label.caption {
-    color: #9a958d;
-    font-size: 9pt;
-    letter-spacing: 0.02em;
-}
-
-label.accent {
-    color: #6b8e23;
-}
-
-/* ── Entry / Input Fields ────────────────────────────────────── */
-entry {
-    background-color: #221e18;
-    color: #f5f0e8;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 12px 16px;
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.25);
-    transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
-    caret-color: #6b8e23;
-}
-
-entry:focus {
-    border-color: rgba(107, 142, 35, 0.50);
-    box-shadow: 0 0 20px rgba(107, 142, 35, 0.15), inset 0 1px 4px rgba(0, 0, 0, 0.20);
-    background-color: #24201a;
-}
-
-entry:disabled {
-    background-color: #1e1a16;
-    color: #4a4a55;
-    border-color: rgba(255, 255, 255, 0.04);
+    background-color: #1C1E20;
+    color: #F5F9FF;
+    font-family: "Inter", "Cantarell", sans-serif;
+    font-size: 13px;
 }
 
 /* ── Header Bar ──────────────────────────────────────────────── */
 headerbar {
-    background: #221e18;
-    border-bottom: 1px solid rgba(107, 142, 35, 0.10);
-    color: #f5f0e8;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.30);
+    background: linear-gradient(to bottom, #23252A, #1C1E20);
+    color: #F5F9FF;
+    border-bottom: 1px solid rgba(145, 200, 246, 0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
     padding: 0 8px;
+    min-height: 46px;
+}
+
+headerbar:backdrop {
+    background-color: #1C1E20;
 }
 
 headerbar button {
     background-color: transparent;
     border: 1px solid transparent;
-    border-radius: 9999px;
-    color: #9a958d;
-    transition: all 180ms ease;
+    border-radius: 8px;
+    color: #D1D5DB;
     box-shadow: none;
+    padding: 6px 12px;
+    min-width: 24px;
+    min-height: 24px;
 }
 
 headerbar button:hover {
-    background-color: rgba(107, 142, 35, 0.12);
-    border-color: rgba(107, 142, 35, 0.20);
-    color: #6b8e23;
-    box-shadow: none;
+    background-color: rgba(145, 200, 246, 0.12);
+    border-color: rgba(145, 200, 246, 0.2);
+    color: #91C8F6;
+    transform: translateY(-1px);
 }
 
 headerbar button:active {
-    background-color: rgba(107, 142, 35, 0.08);
-    color: #567a1a;
+    background-color: rgba(145, 200, 246, 0.08);
+    color: #7DB8E8;
+    transform: translateY(0);
 }
 
 headerbar .title {
-    color: #f5f0e8;
+    color: #F5F9FF;
     font-weight: 600;
-    letter-spacing: 0.01em;
+    font-size: 14px;
 }
 
 headerbar .subtitle {
-    color: #9a958d;
-    font-size: 9pt;
+    color: #D1D5DB;
+    font-size: 11px;
+}
+
+/* ── Labels ──────────────────────────────────────────────────── */
+label {
+    color: #D1D5DB;
+}
+
+label.title-1 {
+    color: #91C8F6;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+label.title-2 {
+    color: #91C8F6;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+label.title-3 {
+    color: #91C8F6;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+label.heading {
+    color: #91C8F6;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+label.caption {
+    color: #9CA3AF;
+    font-size: 11px;
+}
+
+label.dim-label {
+    color: #9CA3AF;
+}
+
+label:disabled {
+    color: #6B7280;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+button {
+    background: linear-gradient(to bottom, #4A5E2A, #3F5225);
+    border: none;
+    color: #D8E4B8;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    min-height: 32px;
+    min-width: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(to bottom, #556B2F, #4A5E2A);
+    box-shadow: 0 2px 6px rgba(63, 82, 37, 0.5);
+    transform: translateY(-1px);
+}
+
+button:active {
+    background: linear-gradient(to bottom, #A3DCF0, #91C8F6);
+    color: #1A2E26;
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background: #374151;
+    color: #9CA3AF;
+    box-shadow: none;
+    opacity: 0.8;
+}
+
+/* ── Flat/Secondary Buttons ──────────────────────────────────── */
+button.flat {
+    background: transparent;
+    color: #91C8F6;
+    box-shadow: none;
+    border: 1px solid transparent;
+    min-height: 24px;
+    min-width: 24px;
+}
+
+button.flat:hover {
+    background: rgba(145, 200, 246, 0.15);
+    border-color: rgba(145, 200, 246, 0.2);
+    transform: none;
+}
+
+button.flat:active {
+    background: rgba(145, 200, 246, 0.25);
+}
+
+button.flat:disabled {
+    color: #6B7280;
+    background: transparent;
+}
+
+/* ── Suggested Action Button ─────────────────────────────────── */
+button.suggested-action {
+    background: linear-gradient(to bottom, #4A5E2A, #3F5225);
+    color: #D8E4B8;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(63, 82, 37, 0.5);
+}
+
+button.suggested-action:hover {
+    background: linear-gradient(to bottom, #556B2F, #4A5E2A);
+    box-shadow: 0 3px 12px rgba(63, 82, 37, 0.6);
+}
+
+button.suggested-action:active {
+    background: linear-gradient(to bottom, #3A4E20, #2F421B);
+}
+
+/* ── Destructive Action Button ───────────────────────────────── */
+button.destructive-action {
+    background: #2A1C1A;
+    border: 1px solid rgba(220, 70, 60, 0.3);
+    color: #E8A898;
+}
+
+button.destructive-action:hover {
+    background: #3A2220;
+    border-color: rgba(220, 70, 60, 0.45);
+    color: #F0B8A8;
+    box-shadow: 0 2px 8px rgba(220, 70, 60, 0.2);
+}
+
+button.destructive-action:active {
+    background: #1F1614;
+    color: #D89080;
+}
+
+/* ── Text Entries ────────────────────────────────────────────── */
+entry {
+    background-color: #111214;
+    border: 1px solid #374151;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #F5F9FF;
+    min-height: 32px;
+    caret-color: #556B2F;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+entry:focus {
+    border-color: #91C8F6;
+    box-shadow: 0 0 0 2px rgba(145, 200, 246, 0.2),
+        inset 0 1px 2px rgba(0, 0, 0, 0.15);
+    background-color: #151719;
+}
+
+entry:disabled {
+    background-color: #1A1C1E;
+    border-color: #2D3748;
+    color: #4B5563;
+}
+
+entry placeholder {
+    color: #6B7280;
+}
+
+entry selection {
+    background-color: rgba(63, 82, 37, 0.3);
+    color: #F5F9FF;
+}
+
+/* ── Spin Buttons ────────────────────────────────────────────── */
+spinbutton {
+    background-color: #111214;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    color: #F5F9FF;
+}
+
+spinbutton:focus {
+    border-color: #91C8F6;
+    box-shadow: 0 0 0 2px rgba(145, 200, 246, 0.2);
+}
+
+spinbutton:disabled {
+    background-color: #1A1C1E;
+    border-color: #2D3748;
+    color: #4B5563;
+}
+
+spinbutton button {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #D1D5DB;
+    min-width: 26px;
+    min-height: 26px;
+    box-shadow: none;
+}
+
+spinbutton button:hover {
+    background: rgba(145, 200, 246, 0.15);
+    color: #91C8F6;
+}
+
+spinbutton button:active {
+    background: rgba(145, 200, 246, 0.25);
+}
+
+spinbutton button:disabled {
+    color: #6B7280;
+}
+
+/* ── Checkboxes ──────────────────────────────────────────────── */
+checkbutton {
+    color: #D1D5DB;
+}
+
+checkbutton check {
+    min-width: 18px;
+    min-height: 18px;
+    border-radius: 6px;
+    border: 1px solid #374151;
+    background-color: #111214;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+checkbutton:hover check {
+    border-color: #91C8F6;
+    background-color: rgba(145, 200, 246, 0.05);
+    box-shadow: 0 0 0 2px rgba(145, 200, 246, 0.1),
+        inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+checkbutton:checked check {
+    background: linear-gradient(to bottom, #4A5E2A, #3F5225);
+    border-color: #3F5225;
+    -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
+    color: #D8E4B8;
+    box-shadow: 0 1px 3px rgba(63, 82, 37, 0.5);
+}
+
+checkbutton:checked:hover check {
+    background: linear-gradient(to bottom, #556B2F, #4A5E2A);
+}
+
+checkbutton:disabled check {
+    background-color: #2D3748;
+    border-color: #374151;
+}
+
+checkbutton:disabled {
+    color: #6B7280;
+}
+
+/* ── Radio Buttons ───────────────────────────────────────────── */
+radiobutton {
+    color: #D1D5DB;
+}
+
+radiobutton radio {
+    min-width: 18px;
+    min-height: 18px;
+    border-radius: 50%;
+    border: 1px solid #374151;
+    background-color: #111214;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+radiobutton:hover radio {
+    border-color: #91C8F6;
+    background-color: rgba(145, 200, 246, 0.05);
+    box-shadow: 0 0 0 2px rgba(145, 200, 246, 0.1),
+        inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+radiobutton:checked radio {
+    background: linear-gradient(to bottom, #4A5E2A, #3F5225);
+    border-color: #3F5225;
+    -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
+    color: #D8E4B8;
+    box-shadow: 0 1px 3px rgba(63, 82, 37, 0.5);
+}
+
+radiobutton:checked:hover radio {
+    background: linear-gradient(to bottom, #556B2F, #4A5E2A);
+}
+
+radiobutton:disabled radio {
+    background-color: #2D3748;
+    border-color: #374151;
+}
+
+radiobutton:disabled {
+    color: #6B7280;
+}
+
+/* ── Switch / Toggle ─────────────────────────────────────────── */
+switch {
+    background: #111214;
+    border: 1px solid #374151;
+    border-radius: 100px;
+    min-width: 48px;
+    min-height: 26px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+switch:checked {
+    background: linear-gradient(to right, #3F5225, #4A5E2A);
+    border-color: #3F5225;
+    box-shadow: 0 1px 4px rgba(63, 82, 37, 0.5);
+}
+
+switch:hover {
+    border-color: #91C8F6;
+}
+
+switch:disabled {
+    background-color: #1A1C1E;
+    border-color: #2D3748;
+}
+
+switch slider {
+    background: #F5F9FF;
+    border-radius: 100px;
+    min-width: 20px;
+    min-height: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    margin: 2px;
+}
+
+switch:checked slider {
+    background: #D8E4B8;
+    box-shadow: 0 2px 6px rgba(63, 82, 37, 0.5);
+}
+
+switch:disabled slider {
+    background: #6B7280;
+}
+
+/* ── Progress Bars ───────────────────────────────────────────── */
+progressbar {
+    background-color: #111214;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    min-height: 14px;
+}
+
+progressbar progress {
+    background: linear-gradient(to right, #3F5225 0%, #91C8F6 100%);
+    border-radius: 7px;
+    box-shadow: 0 0 8px rgba(63, 82, 37, 0.4);
+    min-height: 10px;
+}
+
+progressbar:disabled {
+    background-color: #1A1C1E;
+}
+
+progressbar:disabled progress {
+    background: #4B5563;
+    box-shadow: none;
+}
+
+progressbar trough {
+    background-color: #111214;
+    border-radius: 8px;
+    min-height: 14px;
+}
+
+/* ── Level Bar ───────────────────────────────────────────────── */
+levelbar trough {
+    background-color: #111214;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    padding: 2px;
+    min-height: 14px;
+}
+
+levelbar block.filled {
+    background: linear-gradient(to right, #3F5225, #91C8F6);
+    border-radius: 6px;
+    box-shadow: 0 0 6px rgba(63, 82, 37, 0.4);
+    min-height: 10px;
+}
+
+levelbar block.low {
+    background: linear-gradient(to right, #E8A898, #DC463C);
+}
+
+levelbar block.high {
+    background: linear-gradient(to right, #3F5225, #556B2F);
+}
+
+/* ── Scale / Slider ──────────────────────────────────────────── */
+scale trough {
+    background-color: #111214;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    min-height: 6px;
+    min-width: 6px;
+}
+
+scale highlight {
+    background: linear-gradient(to right, #3F5225, #91C8F6);
+    border-radius: 8px;
+    min-height: 6px;
+}
+
+scale slider {
+    background: linear-gradient(to bottom, #556B2F, #3F5225);
+    border-radius: 50%;
+    min-width: 18px;
+    min-height: 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    border: 2px solid #F5F9FF;
+}
+
+scale slider:hover {
+    background: linear-gradient(to bottom, #A3DCF0, #91C8F6);
+    box-shadow: 0 3px 10px rgba(145, 200, 246, 0.4);
+    transform: scale(1.1);
+}
+
+scale slider:active {
+    transform: scale(0.95);
+}
+
+scale:disabled trough {
+    background-color: #1A1C1E;
+    border-color: #2D3748;
+}
+
+scale:disabled highlight {
+    background: #4B5563;
+}
+
+/* ── Dropdown / Combobox ─────────────────────────────────────── */
+combobox {
+    color: #F5F9FF;
+}
+
+combobox button {
+    background: #111214;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #F5F9FF;
+    min-height: 32px;
+}
+
+combobox button:hover {
+    border-color: #91C8F6;
+    background: #151719;
+    box-shadow: 0 0 0 2px rgba(145, 200, 246, 0.15);
+}
+
+combobox button:disabled {
+    background-color: #1A1C1E;
+    border-color: #2D3748;
+    color: #4B5563;
+}
+
+combobox arrow {
+    color: #D1D5DB;
+    min-height: 16px;
+    min-width: 16px;
+}
+
+combobox:hover arrow {
+    color: #91C8F6;
+}
+
+/* ── Popovers & Menus ────────────────────────────────────────── */
+popover,
+menu,
+.menu {
+    background-color: #23252A;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    padding: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+popover>contents {
+    background-color: transparent;
+}
+
+popover modelbutton,
+menuitem {
+    color: #D1D5DB;
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-height: 28px;
+}
+
+popover modelbutton:hover,
+menuitem:hover {
+    background: rgba(145, 200, 246, 0.15);
+    color: #91C8F6;
+}
+
+popover modelbutton:active,
+menuitem:active {
+    background: rgba(145, 200, 246, 0.25);
+}
+
+popover modelbutton:disabled,
+menuitem:disabled {
+    color: #6B7280;
+}
+
+popover separator,
+menu separator {
+    background: linear-gradient(to right,
+            transparent 0%,
+            rgba(145, 200, 246, 0.15) 20%,
+            rgba(145, 200, 246, 0.2) 50%,
+            rgba(145, 200, 246, 0.15) 80%,
+            transparent 100%);
+    min-height: 1px;
+    margin: 4px 0;
 }
 
 /* ── Scrollbars ──────────────────────────────────────────────── */
@@ -222,431 +595,265 @@ scrollbar {
     border: none;
 }
 
-scrollbar.vertical {
-    margin: 2px 0;
-}
-
-scrollbar.horizontal {
-    margin: 0 2px;
-}
-
 scrollbar slider {
-    background-color: rgba(107, 142, 35, 0.20);
-    border-radius: 14px;
+    background-color: rgba(145, 200, 246, 0.25);
+    border-radius: 10px;
     margin: 3px;
     border: none;
-    transition: background-color 180ms ease;
+    min-width: 12px;
+    min-height: 40px;
 }
 
 scrollbar.vertical slider {
-    min-height: 30px;
+    min-height: 40px;
+    min-width: 12px;
 }
 
 scrollbar.horizontal slider {
-    min-width: 30px;
+    min-width: 40px;
+    min-height: 12px;
 }
 
 scrollbar slider:hover {
-    background-color: rgba(107, 142, 35, 0.35);
+    background-color: rgba(145, 200, 246, 0.4);
     margin: 2px;
 }
 
 scrollbar slider:active {
-    background-color: rgba(107, 142, 35, 0.50);
+    background-color: rgba(145, 200, 246, 0.55);
     margin: 2px;
 }
 
-/* ── Menus ───────────────────────────────────────────────────── */
-menu,
-.menu,
-popover>contents {
-    background-color: #282420;
-    border: 1px solid rgba(107, 142, 35, 0.15);
-    border-radius: 18px;
-    padding: 6px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.30);
-}
-
-menuitem {
-    color: #d8d0c8;
-    padding: 9px 14px;
-    border-radius: 12px;
-    transition: all 130ms ease;
-    font-size: 10pt;
-}
-
-menuitem:hover,
-menuitem:focus {
-    background: rgba(107, 142, 35, 0.15);
-    color: #8ab32a;
-    border-radius: 12px;
-}
-
-menuitem:active {
-    background-color: rgba(107, 142, 35, 0.10);
-    color: #6b8e23;
-}
-
-menuitem>label {
-    color: inherit;
-}
-
-/* ── Checkboxes & Radios ─────────────────────────────────────── */
-checkbutton,
-radiobutton {
-    color: #d8d0c8;
-}
-
-checkbutton check,
-radiobutton radio {
-    background-color: #221e18;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.20);
-    min-width: 18px;
-    min-height: 18px;
-    transition: all 180ms ease;
-}
-
-radiobutton radio {
-    border-radius: 50%;
-}
-
-checkbutton:hover check,
-radiobutton:hover radio {
-    border-color: rgba(107, 142, 35, 0.40);
-    box-shadow: 0 0 8px rgba(107, 142, 35, 0.10), inset 0 1px 3px rgba(0, 0, 0, 0.20);
-}
-
-checkbutton:checked check,
-radiobutton:checked radio {
-    background: linear-gradient(135deg, #6b8e23 0%, #3d5614 100%);
-    border-color: rgba(138, 179, 42, 0.40);
-    box-shadow: 0 2px 6px rgba(107, 142, 35, 0.25);
-}
-
-/* ── Progress Bars ───────────────────────────────────────────── */
-progressbar {
-    background-color: #221e18;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
-}
-
-progressbar progress {
-    background: linear-gradient(90deg, #4a6318 0%, #6b8e23 50%, #8ab32a 100%);
-    border-radius: 14px;
-    box-shadow: 0 0 12px rgba(107, 142, 35, 0.25);
-}
-
-/* ── Scale / Slider ──────────────────────────────────────────── */
-scale trough {
-    background-color: #221e18;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    min-height: 6px;
-}
-
-scale highlight {
-    background: linear-gradient(90deg, #4a6318 0%, #6b8e23 100%);
-    border-radius: 12px;
-}
-
-scale slider {
-    background: #7aa025;
-    border-radius: 50%;
-    min-width: 18px;
-    min-height: 18px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.30);
-    transition: all 150ms ease;
-}
-
-scale slider:hover {
-    background: #8ab32a;
-    box-shadow: 0 4px 14px rgba(107, 142, 35, 0.30);
-}
-
-/* ── Spin Button ─────────────────────────────────────────────── */
-spinbutton {
-    background-color: #221e18;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    color: #f5f0e8;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.20);
-}
-
-spinbutton:focus {
-    border-color: rgba(107, 142, 35, 0.45);
-    box-shadow: 0 0 16px rgba(107, 142, 35, 0.12), inset 0 1px 3px rgba(0, 0, 0, 0.20);
-}
-
-spinbutton button {
+/* ── List & Rows ─────────────────────────────────────────────── */
+list {
     background-color: transparent;
     border: none;
-    border-radius: 9999px;
-    color: #9a958d;
-    box-shadow: none;
-    padding: 6px 10px;
+    padding: 4px;
 }
 
-spinbutton button:hover {
-    background-color: rgba(107, 142, 35, 0.12);
-    color: #6b8e23;
+listboxrow {
+    background-color: #23252A;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    margin: 6px 8px;
+    padding: 12px 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    min-height: 32px;
+}
+
+listboxrow:hover {
+    background-color: #2A2C32;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    border-color: rgba(145, 200, 246, 0.2);
+}
+
+listboxrow:selected {
+    background: rgba(63, 82, 37, 0.2);
+    border: 1px solid rgba(63, 82, 37, 0.4);
+    box-shadow: 0 2px 8px rgba(63, 82, 37, 0.3);
+    color: #D8E4B8;
+}
+
+listboxrow:selected:hover {
+    background: rgba(63, 82, 37, 0.25);
 }
 
 /* ── Notebooks / Tabs ────────────────────────────────────────── */
 notebook>header {
-    background-color: #1c1814;
-    border-bottom: 1px solid rgba(107, 142, 35, 0.12);
+    background-color: #1C1E20;
+    border-bottom: 1px solid #374151;
     padding: 0 6px;
+    min-height: 38px;
 }
 
 notebook>header>tabs>tab {
     background-color: transparent;
-    color: #9a958d;
-    padding: 10px 20px;
+    color: #9CA3AF;
+    padding: 10px 18px;
     border: none;
     border-bottom: 2px solid transparent;
     border-radius: 0;
     font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: all 180ms ease;
     margin-bottom: -1px;
+    min-height: 32px;
 }
 
 notebook>header>tabs>tab:hover {
-    color: #d8d0c8;
-    border-bottom-color: rgba(107, 142, 35, 0.35);
+    color: #D1D5DB;
+    border-bottom-color: rgba(145, 200, 246, 0.3);
+    background: rgba(145, 200, 246, 0.05);
 }
 
 notebook>header>tabs>tab:checked {
-    color: #8ab32a;
-    border-bottom: 2px solid #6b8e23;
+    color: #91C8F6;
+    border-bottom: 2px solid #91C8F6;
     background-color: transparent;
-}
-
-/* ── Popovers ────────────────────────────────────────────────── */
-popover {
-    background-color: #282420;
-    border: 1px solid rgba(107, 142, 35, 0.15);
-    border-radius: 18px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.30);
-    padding: 8px;
-}
-
-popover arrow {
-    background-color: #282420;
-    border: 1px solid rgba(107, 142, 35, 0.15);
-}
-
-/* ── Separators ──────────────────────────────────────────────── */
-separator {
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(107, 142, 35, 0.15) 20%,
-            rgba(107, 142, 35, 0.20) 50%,
-            rgba(107, 142, 35, 0.15) 80%,
-            transparent 100%);
-    min-height: 1px;
-    margin: 4px 0;
-}
-
-separator.vertical {
-    background: linear-gradient(180deg,
-            transparent 0%,
-            rgba(107, 142, 35, 0.15) 20%,
-            rgba(107, 142, 35, 0.20) 50%,
-            rgba(107, 142, 35, 0.15) 80%,
-            transparent 100%);
-    min-width: 1px;
-}
-
-/* ── Toolbars ────────────────────────────────────────────────── */
-toolbar {
-    background: #221e18;
-    border-bottom: 1px solid rgba(107, 142, 35, 0.08);
-    padding: 4px 6px;
-}
-
-/* ── Status Bar ──────────────────────────────────────────────── */
-statusbar {
-    background-color: #1c1814;
-    color: #9a958d;
-    border-top: 1px solid rgba(107, 142, 35, 0.08);
-    font-size: 9pt;
-    padding: 4px 12px;
-}
-
-/* ── Frame / GroupBox ────────────────────────────────────────── */
-frame {
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 2px;
-}
-
-frame>border {
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-}
-
-/* ── Switch / Toggle ─────────────────────────────────────────── */
-switch {
-    background: #221e18;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 100px;
-    min-width: 48px;
-    min-height: 26px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
-    transition: all 220ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-switch:checked {
-    background: linear-gradient(90deg, #4a6318 0%, #6b8e23 100%);
-    border-color: rgba(138, 179, 42, 0.35);
-    box-shadow: 0 2px 8px rgba(107, 142, 35, 0.20);
-}
-
-switch:hover {
-    border-color: rgba(107, 142, 35, 0.35);
-}
-
-switch slider {
-    background: #e5dfd0;
-    border-radius: 100px;
-    min-width: 22px;
-    min-height: 22px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.30);
-    margin: 2px;
-    transition: all 220ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-switch:checked slider {
-    background: #e8f0c8;
-    box-shadow: 0 2px 8px rgba(107, 142, 35, 0.25);
-}
-
-/* ── Tooltip ─────────────────────────────────────────────────── */
-tooltip {
-    background-color: #2e2a24;
-    color: #f0ebe3;
-    border: 1px solid rgba(107, 142, 35, 0.20);
-    border-radius: 14px;
-    padding: 6px 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.30);
-    font-size: 9.5pt;
-}
-
-tooltip label {
-    color: #f0ebe3;
 }
 
 /* ── Text View ───────────────────────────────────────────────── */
 textview {
-    background-color: #221e18;
-    color: #f5f0e8;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
+    background-color: #111214;
+    color: #F5F9FF;
+    border: 1px solid #374151;
+    border-radius: 8px;
     padding: 12px;
-    caret-color: #6b8e23;
+    caret-color: #556B2F;
 }
 
 textview:focus {
-    border-color: rgba(107, 142, 35, 0.40);
-    box-shadow: 0 0 16px rgba(107, 142, 35, 0.12);
+    border-color: #91C8F6;
+    box-shadow: 0 0 0 2px rgba(145, 200, 246, 0.2);
+}
+
+textview:disabled {
+    background-color: #1A1C1E;
+    border-color: #2D3748;
+    color: #4B5563;
 }
 
 textview text {
     background-color: transparent;
-    color: #f5f0e8;
+    color: #F5F9FF;
 }
 
 textview text selection {
-    background-color: rgba(107, 142, 35, 0.25);
-    color: #f5f0e8;
+    background-color: rgba(63, 82, 37, 0.3);
+    color: #F5F9FF;
 }
 
-/* ── Selection ───────────────────────────────────────────────── */
-selection {
-    background-color: rgba(107, 142, 35, 0.25);
-    color: #f5f0e8;
+/* ── Tooltip ─────────────────────────────────────────────────── */
+tooltip {
+    background-color: #2A2C32;
+    color: #F5F9FF;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 6px 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+}
+
+tooltip label {
+    color: #F5F9FF;
+}
+
+/* ── Separators ──────────────────────────────────────────────── */
+separator {
+    background: linear-gradient(to right,
+            transparent 0%,
+            rgba(145, 200, 246, 0.15) 20%,
+            rgba(145, 200, 246, 0.2) 50%,
+            rgba(145, 200, 246, 0.15) 80%,
+            transparent 100%);
+    min-height: 1px;
+    margin: 6px 0;
+}
+
+separator.vertical {
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(145, 200, 246, 0.15) 20%,
+            rgba(145, 200, 246, 0.2) 50%,
+            rgba(145, 200, 246, 0.15) 80%,
+            transparent 100%);
+    min-width: 1px;
+    margin: 0 6px;
+}
+
+/* ── Frames ──────────────────────────────────────────────────── */
+frame {
+    border: 1px solid #374151;
+    border-radius: 10px;
+    padding: 2px;
+}
+
+frame>border {
+    border: 1px solid #374151;
+    border-radius: 10px;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────── */
+toolbar {
+    background: #1C1E20;
+    border-bottom: 1px solid #374151;
+    padding: 4px 6px;
+    min-height: 38px;
+}
+
+/* ── Status Bar ──────────────────────────────────────────────── */
+statusbar {
+    background-color: #1C1E20;
+    color: #9CA3AF;
+    border-top: 1px solid #374151;
+    font-size: 12px;
+    padding: 4px 12px;
+    min-height: 24px;
 }
 
 /* ── Infobar ─────────────────────────────────────────────────── */
 infobar {
-    border-radius: 14px;
+    border-radius: 8px;
     margin: 8px;
-    padding: 4px;
+    padding: 8px;
+    min-height: 32px;
 }
 
 infobar.info {
-    background-color: rgba(107, 142, 35, 0.12);
-    border: 1px solid rgba(107, 142, 35, 0.25);
-    color: #8ab32a;
+    background-color: rgba(145, 200, 246, 0.15);
+    border: 1px solid rgba(145, 200, 246, 0.3);
+    color: #91C8F6;
 }
 
 infobar.error {
-    background-color: rgba(220, 70, 60, 0.12);
-    border: 1px solid rgba(220, 70, 60, 0.25);
-    color: #d89080;
+    background-color: rgba(220, 70, 60, 0.15);
+    border: 1px solid rgba(220, 70, 60, 0.3);
+    color: #E8A898;
 }
 
 infobar.warning {
-    background-color: rgba(220, 170, 40, 0.12);
-    border: 1px solid rgba(220, 170, 40, 0.25);
-    color: #e8c055;
+    background-color: rgba(220, 170, 40, 0.15);
+    border: 1px solid rgba(220, 170, 40, 0.3);
+    color: #E8C870;
 }
 
 infobar.success {
-    background-color: rgba(70, 180, 100, 0.12);
-    border: 1px solid rgba(70, 180, 100, 0.25);
-    color: #70c490;
+    background-color: rgba(63, 82, 37, 0.15);
+    border: 1px solid rgba(63, 82, 37, 0.3);
+    color: #D8E4B8;
 }
 
-/* ── Level Bar ───────────────────────────────────────────────── */
-levelbar trough {
-    background-color: #221e18;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+/* ── Expander ────────────────────────────────────────────────── */
+expander title {
+    color: #D1D5DB;
+    font-weight: 500;
+    min-height: 32px;
 }
 
-levelbar block.filled {
-    background: linear-gradient(90deg, #4a6318 0%, #6b8e23 100%);
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgba(107, 142, 35, 0.20);
+expander title:hover {
+    color: #91C8F6;
 }
 
-levelbar block.low {
-    background: linear-gradient(90deg, #d89080 0%, #c86050 100%);
+expander title arrow {
+    color: #91C8F6;
+    min-height: 16px;
+    min-width: 16px;
 }
 
-levelbar block.high {
-    background: linear-gradient(90deg, #70c490 0%, #4aaa70 100%);
+/* ── Sidebar ─────────────────────────────────────────────────── */
+.sidebar {
+    background-color: #1A1C1E;
+    border-right: 1px solid #374151;
 }
 
-/* ── Combobox / Dropdown ─────────────────────────────────────── */
-combobox {
-    color: #f5f0e8;
+/* ── Paned Separator ─────────────────────────────────────────── */
+paned>separator {
+    background-color: rgba(145, 200, 246, 0.12);
+    min-width: 1px;
+    min-height: 1px;
 }
 
-combobox button {
-    background: #26221c;
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-combobox button:hover {
-    border-color: rgba(107, 142, 35, 0.35);
-    color: #8ab32a;
-}
-
-combobox>box>button {
-    border-radius: 9999px;
-}
-
-/* ── Color Swatch ────────────────────────────────────────────── */
-colorbutton {
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 14px;
-    padding: 4px;
+paned>separator:hover {
+    background-color: rgba(145, 200, 246, 0.25);
 }
 
 /* ── Link Button ─────────────────────────────────────────────── */
@@ -654,54 +861,48 @@ button.link {
     background: transparent;
     border: none;
     box-shadow: none;
-    color: #6b8e23;
+    color: #91C8F6;
     text-decoration: underline;
-    padding: 0 2px;
+    padding: 0 4px;
+    min-height: 24px;
 }
 
 button.link:hover {
-    color: #8ab32a;
+    color: #A3DCF0;
     background: transparent;
     box-shadow: none;
-    border: none;
+}
+
+/* ── Selection ───────────────────────────────────────────────── */
+selection {
+    background-color: rgba(63, 82, 37, 0.3);
+    color: #F5F9FF;
+}
+
+/* ── Backdrop State ──────────────────────────────────────────── */
+window:backdrop {
+    opacity: 0.95;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────── */
+spinner {
+    color: #91C8F6;
+    opacity: 1;
+    min-height: 16px;
+    min-width: 16px;
+}
+
+spinner:disabled {
+    color: #6B7280;
+    opacity: 0.5;
 }
 
 /* ── Image ───────────────────────────────────────────────────── */
 image {
-    border-radius: 12px;
-}
-
-/* ── Sidebar ─────────────────────────────────────────────────── */
-.sidebar {
-    background-color: #1c1814;
-    border-right: 1px solid rgba(107, 142, 35, 0.08);
-}
-
-/* ── Paned ───────────────────────────────────────────────────── */
-paned>separator {
-    background-color: rgba(107, 142, 35, 0.12);
-    min-width: 1px;
-    min-height: 1px;
-}
-
-paned>separator:hover {
-    background-color: rgba(107, 142, 35, 0.25);
-}
-
-/* ── Expander ────────────────────────────────────────────────── */
-expander title {
-    color: #d8d0c8;
-    font-weight: 500;
-}
-
-expander title:hover {
-    color: #8ab32a;
-}
-
-expander title arrow {
-    color: #6b8e23;
+    min-height: 16px;
+    min-width: 16px;
 }
 
 /* ══════════════════════════════════════════════════════════════
-   WARM MOSS — End of stylesheet
+   SLATE & SKY — End of stylesheet
    ══════════════════════════════════════════════════════════════ */
