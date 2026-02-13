@@ -27,7 +27,7 @@ mod window;
 use self::application::UpdaterNewApplication;
 use self::window::UpdaterWindow;
 
-use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
+use config::{GETTEXT_PACKAGE, LOCALEDIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
 use gtk::{gio, glib};
 use gtk::prelude::*;
@@ -40,7 +40,8 @@ fn main() -> glib::ExitCode {
     textdomain(GETTEXT_PACKAGE).expect("Unable to switch to the text domain");
 
     // Load resources
-    let resources = gio::Resource::load(PKGDATADIR.to_owned() + "/updater-new.gresource")
+    let resources_bytes = include_bytes!(concat!(env!("OUT_DIR"), "/updater-new.gresource"));
+    let resources = gio::Resource::from_data(&glib::Bytes::from_static(resources_bytes))
         .expect("Could not load resources");
     gio::resources_register(&resources);
 

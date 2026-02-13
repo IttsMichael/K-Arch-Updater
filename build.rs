@@ -4,9 +4,10 @@ fn main() {
     println!("cargo:rerun-if-changed=src/updater.gresource.xml");
     println!("cargo:rerun-if-changed=src/window.ui");
 
+    let out_dir = std::env::var("OUT_DIR").unwrap();
     let status = Command::new("glib-compile-resources")
         .args([
-            "--target=src/updater-new.gresource",
+            &format!("--target={}/updater-new.gresource", out_dir),
             "--sourcedir=src",
             "src/updater.gresource.xml",
         ])
