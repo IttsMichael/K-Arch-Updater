@@ -1,12 +1,11 @@
 /* ============================================================
-   DEEP ORBIT — GTK4 Theme
-   Palette: Deep space black, midnight blue, glowing cyan
-   Inspired by: cosmic ice planet wallpaper
+   NIGHT — GTK4 Theme
+   Clean, simple, modern dark theme with cyan accents
    ============================================================ */
 
-/* ── Global Transitions ──────────────────────────────────────── */
+/* ── Global ──────────────────────────────────────────────────── */
 * {
-    transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
     min-width: 0;
     min-height: 0;
 }
@@ -14,169 +13,157 @@
 /* ── Window ─────────────────────────────────────────────────── */
 window {
     background-color: #000000;
-    color: #D6EEF8;
+    color: #E0EEF4;
     font-family: "Cantarell", "Noto Sans", sans-serif;
     font-size: 13px;
 }
 
 /* ── Header Bar ──────────────────────────────────────────────── */
 headerbar {
-    background: linear-gradient(to bottom, #050A12, #000000);
-    color: #D6EEF8;
-    border-bottom: 1px solid rgba(80, 190, 230, 0.12);
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+    background-color: #000000;
+    color: #E0EEF4;
+    border-bottom: 1px solid #1A2530;
     padding: 0 8px;
     min-height: 46px;
 }
 
 headerbar:backdrop {
     background-color: #000000;
+    border-bottom-color: #111820;
 }
 
 headerbar button {
     background-color: transparent;
     border: 1px solid transparent;
-    border-radius: 8px;
-    color: #8EC6DC;
-    box-shadow: none;
+    border-radius: 6px;
+    color: #7AAFCA;
     padding: 6px 12px;
     min-width: 32px;
     min-height: 32px;
 }
 
 headerbar button:hover {
-    background-color: rgba(80, 190, 230, 0.12);
-    border-color: rgba(80, 190, 230, 0.2);
-    color: #50BEE6;
-    transform: translateY(-1px);
+    background-color: #0D1E28;
+    border-color: #1E3040;
+    color: #A8D4E8;
 }
 
 headerbar button:active {
-    background-color: rgba(80, 190, 230, 0.08);
-    color: #3AAED6;
-    transform: translateY(0);
+    background-color: #0A1820;
+    color: #E0EEF4;
 }
 
 headerbar .title {
-    color: #D6EEF8;
+    color: #E0EEF4;
     font-weight: 600;
     font-size: 14px;
 }
 
 headerbar .subtitle {
-    color: #8EC6DC;
+    color: #5A8FA8;
     font-size: 11px;
 }
 
 /* ── Labels ──────────────────────────────────────────────────── */
 label {
-    color: #8EC6DC;
+    color: #B0CCD8;
     min-height: 16px;
 }
 
 label.title-1 {
-    color: #50BEE6;
-    font-size: 24px;
+    color: #E0EEF4;
+    font-size: 22px;
     font-weight: 700;
 }
 
 label.title-2 {
-    color: #50BEE6;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-label.title-3 {
-    color: #50BEE6;
+    color: #E0EEF4;
     font-size: 18px;
     font-weight: 600;
 }
 
+label.title-3 {
+    color: #E0EEF4;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 label.heading {
-    color: #50BEE6;
-    font-size: 15px;
+    color: #E0EEF4;
+    font-size: 14px;
     font-weight: 600;
 }
 
 label.caption {
-    color: #4D7A8E;
+    color: #4A7080;
     font-size: 11px;
 }
 
 label.dim-label {
-    color: #4D7A8E;
+    color: #4A7080;
 }
 
 label:disabled {
-    color: #2A4050;
+    color: #283840;
 }
 
 /* ── Buttons ─────────────────────────────────────────────────── */
 button {
-    background: linear-gradient(to bottom, #0D2035, #091828);
-    border: 1px solid rgba(80, 190, 230, 0.25);
-    color: #A0D8EF;
-    font-weight: 600;
+    background-color: #0D1E28;
+    border: 1px solid #1E3040;
+    color: #B0CCD8;
+    font-weight: 500;
     padding: 8px 16px;
-    border-radius: 8px;
+    border-radius: 6px;
     min-height: 36px;
     min-width: 36px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 8px rgba(30, 120, 160, 0.1);
 }
 
 button:hover {
-    background: linear-gradient(to bottom, #122840, #0D2035);
-    border-color: rgba(80, 190, 230, 0.45);
-    box-shadow: 0 2px 8px rgba(30, 120, 160, 0.3), 0 0 16px rgba(80, 190, 230, 0.1);
-    transform: translateY(-1px);
+    background-color: #102430;
+    border-color: #2A4050;
+    color: #D0E8F2;
 }
 
 button:active {
-    background: linear-gradient(to bottom, #50BEE6, #3AAED6);
-    color: #050D18;
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-    border-color: #50BEE6;
+    background-color: #0A1820;
+    color: #E0EEF4;
 }
 
 button:disabled {
-    background: #0A1520;
-    color: #2A4050;
-    box-shadow: none;
-    border-color: rgba(80, 190, 230, 0.08);
-    opacity: 0.8;
+    background-color: #080E14;
+    border-color: #111820;
+    color: #283840;
 }
 
-/* ── Flat/Secondary Buttons ──────────────────────────────────── */
+/* ── Flat Buttons ────────────────────────────────────────────── */
 button.flat {
-    background: transparent;
-    color: #50BEE6;
-    box-shadow: none;
-    border: 1px solid transparent;
-    min-height: 32px;
-    min-width: 32px;
+    background-color: transparent;
+    border-color: transparent;
+    color: #4AACCC;
 }
 
 button.flat:hover {
-    background: rgba(80, 190, 230, 0.1);
-    border-color: rgba(80, 190, 230, 0.2);
-    transform: none;
+    background-color: #0D1E28;
+    border-color: transparent;
+    color: #6ABCDC;
 }
 
 button.flat:active {
-    background: rgba(80, 190, 230, 0.2);
+    background-color: #0A1820;
 }
 
 button.flat:disabled {
-    color: #2A4050;
-    background: transparent;
+    background-color: transparent;
+    color: #283840;
 }
 
-/* ── Circular Buttons ────────────────────────────────────────── */
+/* ── Circular / Image Buttons ────────────────────────────────── */
 button.circular {
     min-width: 36px;
     min-height: 36px;
     padding: 0;
+    border-radius: 50%;
 }
 
 button.image-button {
@@ -184,173 +171,175 @@ button.image-button {
     min-height: 24px;
 }
 
-/* ── Suggested Action Button ─────────────────────────────────── */
+/* ── Suggested Action ────────────────────────────────────────── */
 button.suggested-action {
-    background: linear-gradient(to bottom, #0D2A45, #091E35);
-    color: #A0D8EF;
-    font-weight: 700;
-    border: 1px solid rgba(80, 190, 230, 0.4);
-    box-shadow: 0 2px 12px rgba(30, 120, 160, 0.35), 0 0 20px rgba(80, 190, 230, 0.08);
+    background-color: #0F3248;
+    border-color: #1A4A68;
+    color: #A8D4E8;
+    font-weight: 600;
 }
 
 button.suggested-action:hover {
-    background: linear-gradient(to bottom, #122E4A, #0D2A45);
-    border-color: rgba(80, 190, 230, 0.6);
-    box-shadow: 0 3px 16px rgba(30, 120, 160, 0.5), 0 0 28px rgba(80, 190, 230, 0.15);
+    background-color: #143C56;
+    border-color: #226080;
+    color: #C8E4F2;
 }
 
 button.suggested-action:active {
-    background: linear-gradient(to bottom, #50BEE6, #3AAED6);
-    color: #050D18;
-    border-color: #50BEE6;
+    background-color: #0A2838;
+    color: #E0EEF4;
 }
 
-/* ── Destructive Action Button ───────────────────────────────── */
+/* ── Destructive Action ──────────────────────────────────────── */
 button.destructive-action {
-    background: #12090A;
-    border: 1px solid rgba(200, 60, 50, 0.3);
-    color: #D08888;
+    background-color: #1E0A08;
+    border-color: #3A1210;
+    color: #C08880;
 }
 
 button.destructive-action:hover {
-    background: #1A0C0D;
-    border-color: rgba(200, 60, 50, 0.5);
-    color: #E09898;
-    box-shadow: 0 2px 8px rgba(200, 60, 50, 0.2);
+    background-color: #26100E;
+    border-color: #4A1A18;
+    color: #D09890;
 }
 
 button.destructive-action:active {
-    background: #0E0708;
-    color: #C07878;
+    background-color: #160806;
+}
+
+/* ── Link Button ─────────────────────────────────────────────── */
+button.link {
+    background-color: transparent;
+    border: none;
+    color: #4AACCC;
+    text-decoration: underline;
+    padding: 0 4px;
+    min-height: 24px;
+}
+
+button.link:hover {
+    color: #6ABCDC;
 }
 
 /* ── Text Entries ────────────────────────────────────────────── */
 entry {
-    background-color: #04080F;
-    border: 1px solid rgba(80, 190, 230, 0.2);
+    background-color: #080E14;
+    border: 1px solid #1A2C3A;
     padding: 8px 12px;
-    border-radius: 8px;
-    color: #D6EEF8;
+    border-radius: 6px;
+    color: #E0EEF4;
     min-height: 36px;
-    caret-color: #50BEE6;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    caret-color: #4AACCC;
 }
 
 entry:focus {
-    border-color: #50BEE6;
-    box-shadow: 0 0 0 2px rgba(80, 190, 230, 0.18),
-        inset 0 1px 3px rgba(0, 0, 0, 0.3);
-    background-color: #060C14;
+    border-color: #4AACCC;
+    background-color: #0A1218;
 }
 
 entry:disabled {
-    background-color: #080E18;
-    border-color: rgba(80, 190, 230, 0.08);
-    color: #2A4050;
+    background-color: #060A0E;
+    border-color: #111820;
+    color: #283840;
 }
 
 entry placeholder {
-    color: #2A4A60;
+    color: #2A4050;
 }
 
 entry selection {
-    background-color: rgba(80, 190, 230, 0.25);
-    color: #D6EEF8;
+    background-color: #0F3248;
+    color: #E0EEF4;
 }
 
 entry progress {
     min-height: 2px;
+    background-color: #4AACCC;
 }
 
 /* ── Spin Buttons ────────────────────────────────────────────── */
 spinbutton {
-    background-color: #04080F;
-    border: 1px solid rgba(80, 190, 230, 0.2);
-    border-radius: 8px;
-    color: #D6EEF8;
+    background-color: #080E14;
+    border: 1px solid #1A2C3A;
+    border-radius: 6px;
+    color: #E0EEF4;
     min-height: 36px;
 }
 
 spinbutton:focus {
-    border-color: #50BEE6;
-    box-shadow: 0 0 0 2px rgba(80, 190, 230, 0.18);
+    border-color: #4AACCC;
 }
 
 spinbutton:disabled {
-    background-color: #080E18;
-    border-color: rgba(80, 190, 230, 0.08);
-    color: #2A4050;
+    background-color: #060A0E;
+    border-color: #111820;
+    color: #283840;
 }
 
 spinbutton button {
-    background: transparent;
+    background-color: transparent;
     border: none;
-    border-radius: 6px;
-    color: #8EC6DC;
+    border-radius: 4px;
+    color: #5A8FA8;
     min-width: 28px;
     min-height: 28px;
-    box-shadow: none;
 }
 
 spinbutton button:hover {
-    background: rgba(80, 190, 230, 0.12);
-    color: #50BEE6;
+    background-color: #0D1E28;
+    color: #4AACCC;
 }
 
 spinbutton button:active {
-    background: rgba(80, 190, 230, 0.22);
+    background-color: #0A1820;
 }
 
 spinbutton button:disabled {
-    color: #2A4050;
+    color: #283840;
 }
 
 /* ── Checkboxes ──────────────────────────────────────────────── */
 checkbutton {
-    color: #8EC6DC;
+    color: #B0CCD8;
     min-height: 24px;
 }
 
 checkbutton check {
     min-width: 18px;
     min-height: 18px;
-    border-radius: 6px;
-    border: 1px solid rgba(80, 190, 230, 0.25);
-    background-color: #04080F;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    border: 1px solid #1E3040;
+    background-color: #080E14;
 }
 
 checkbutton:hover check {
-    border-color: #50BEE6;
-    background-color: rgba(80, 190, 230, 0.05);
-    box-shadow: 0 0 0 2px rgba(80, 190, 230, 0.1),
-        inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    border-color: #4AACCC;
+    background-color: #0A1820;
 }
 
 checkbutton:checked check {
-    background: linear-gradient(to bottom, #1A6080, #0D4060);
-    border-color: #50BEE6;
+    background-color: #0F3248;
+    border-color: #4AACCC;
     -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
-    color: #A0D8EF;
-    box-shadow: 0 0 8px rgba(80, 190, 230, 0.4);
+    color: #A8D4E8;
 }
 
 checkbutton:checked:hover check {
-    background: linear-gradient(to bottom, #207090, #1A6080);
+    background-color: #143C56;
 }
 
 checkbutton:disabled check {
-    background-color: #0A1520;
-    border-color: rgba(80, 190, 230, 0.08);
+    background-color: #060A0E;
+    border-color: #111820;
 }
 
 checkbutton:disabled {
-    color: #2A4050;
+    color: #283840;
 }
 
 /* ── Radio Buttons ───────────────────────────────────────────── */
 radiobutton {
-    color: #8EC6DC;
+    color: #B0CCD8;
     min-height: 24px;
 }
 
@@ -358,144 +347,128 @@ radiobutton radio {
     min-width: 18px;
     min-height: 18px;
     border-radius: 50%;
-    border: 1px solid rgba(80, 190, 230, 0.25);
-    background-color: #04080F;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1E3040;
+    background-color: #080E14;
 }
 
 radiobutton:hover radio {
-    border-color: #50BEE6;
-    background-color: rgba(80, 190, 230, 0.05);
-    box-shadow: 0 0 0 2px rgba(80, 190, 230, 0.1),
-        inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    border-color: #4AACCC;
+    background-color: #0A1820;
 }
 
 radiobutton:checked radio {
-    background: linear-gradient(to bottom, #1A6080, #0D4060);
-    border-color: #50BEE6;
+    background-color: #0F3248;
+    border-color: #4AACCC;
     -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
-    color: #A0D8EF;
-    box-shadow: 0 0 8px rgba(80, 190, 230, 0.4);
+    color: #A8D4E8;
 }
 
 radiobutton:checked:hover radio {
-    background: linear-gradient(to bottom, #207090, #1A6080);
+    background-color: #143C56;
 }
 
 radiobutton:disabled radio {
-    background-color: #0A1520;
-    border-color: rgba(80, 190, 230, 0.08);
+    background-color: #060A0E;
+    border-color: #111820;
 }
 
 radiobutton:disabled {
-    color: #2A4050;
+    color: #283840;
 }
 
 /* ── Switch / Toggle ─────────────────────────────────────────── */
 switch {
-    background: #04080F;
-    border: 1px solid rgba(80, 190, 230, 0.2);
+    background-color: #0A1418;
+    border: 1px solid #1A2C3A;
     border-radius: 100px;
     min-width: 52px;
     min-height: 28px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 switch:checked {
-    background: linear-gradient(to right, #0D4060, #1A6080);
-    border-color: #50BEE6;
-    box-shadow: 0 0 10px rgba(80, 190, 230, 0.3);
+    background-color: #0F3248;
+    border-color: #4AACCC;
 }
 
 switch:hover {
-    border-color: #50BEE6;
+    border-color: #2A4A60;
 }
 
 switch:disabled {
-    background-color: #080E18;
-    border-color: rgba(80, 190, 230, 0.08);
+    background-color: #060A0E;
+    border-color: #111820;
 }
 
 switch slider {
-    background: #8EC6DC;
+    background-color: #4A6878;
     border-radius: 100px;
     min-width: 22px;
     min-height: 22px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     margin: 2px;
 }
 
 switch:checked slider {
-    background: #D6EEF8;
-    box-shadow: 0 2px 8px rgba(80, 190, 230, 0.5), 0 0 12px rgba(80, 190, 230, 0.3);
+    background-color: #4AACCC;
 }
 
 switch:disabled slider {
-    background: #2A4050;
+    background-color: #1E3040;
 }
 
 /* ── Progress Bars ───────────────────────────────────────────── */
 progressbar {
-    background-color: #04080F;
-    border-radius: 8px;
-    border: 1px solid rgba(80, 190, 230, 0.15);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-    min-height: 16px;
-}
-
-progressbar progress {
-    background: linear-gradient(to right, #0D4060 0%, #50BEE6 100%);
-    border-radius: 7px;
-    box-shadow: 0 0 10px rgba(80, 190, 230, 0.4);
-    min-height: 12px;
-    min-width: 2px;
-}
-
-progressbar:disabled {
-    background-color: #080E18;
-}
-
-progressbar:disabled progress {
-    background: #1A3040;
-    box-shadow: none;
+    background-color: #080E14;
+    border-radius: 6px;
+    border: 1px solid #1A2C3A;
+    min-height: 8px;
 }
 
 progressbar trough {
-    background-color: #04080F;
-    border-radius: 8px;
-    min-height: 16px;
+    background-color: #080E14;
+    border-radius: 6px;
+    min-height: 8px;
+}
+
+progressbar progress {
+    background-color: #4AACCC;
+    border-radius: 5px;
+    min-height: 6px;
+    min-width: 2px;
+}
+
+progressbar:disabled progress {
+    background-color: #1E3040;
 }
 
 /* ── Level Bar ───────────────────────────────────────────────── */
 levelbar {
-    min-height: 16px;
+    min-height: 8px;
 }
 
 levelbar trough {
-    background-color: #04080F;
-    border-radius: 8px;
-    border: 1px solid rgba(80, 190, 230, 0.15);
-    padding: 2px;
-    min-height: 16px;
+    background-color: #080E14;
+    border-radius: 6px;
+    border: 1px solid #1A2C3A;
+    padding: 1px;
+    min-height: 8px;
 }
 
 levelbar block {
     min-width: 2px;
-    min-height: 12px;
+    min-height: 6px;
 }
 
 levelbar block.filled {
-    background: linear-gradient(to right, #0D4060, #50BEE6);
-    border-radius: 6px;
-    box-shadow: 0 0 8px rgba(80, 190, 230, 0.35);
+    background-color: #4AACCC;
+    border-radius: 4px;
 }
 
 levelbar block.low {
-    background: linear-gradient(to right, #60100D, #C03030);
+    background-color: #C05040;
 }
 
 levelbar block.high {
-    background: linear-gradient(to right, #0D4060, #1A6080);
+    background-color: #2A8AAA;
 }
 
 levelbar block.empty {
@@ -516,58 +489,55 @@ scale.vertical {
 }
 
 scale trough {
-    background-color: #04080F;
-    border: 1px solid rgba(80, 190, 230, 0.18);
-    border-radius: 8px;
-    min-height: 8px;
-    min-width: 8px;
+    background-color: #0A1418;
+    border: 1px solid #1A2C3A;
+    border-radius: 6px;
+    min-height: 6px;
+    min-width: 6px;
 }
 
 scale.horizontal trough {
-    min-height: 8px;
+    min-height: 6px;
 }
 
 scale.vertical trough {
-    min-width: 8px;
+    min-width: 6px;
 }
 
 scale highlight {
-    background: linear-gradient(to right, #0D4060, #50BEE6);
-    border-radius: 8px;
-    min-height: 8px;
+    background-color: #4AACCC;
+    border-radius: 6px;
+    min-height: 6px;
     min-width: 2px;
 }
 
 scale slider {
-    background: linear-gradient(to bottom, #3AAED6, #1A6080);
+    background-color: #4AACCC;
     border-radius: 50%;
-    min-width: 20px;
-    min-height: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 10px rgba(80, 190, 230, 0.3);
-    border: 2px solid #D6EEF8;
+    min-width: 18px;
+    min-height: 18px;
+    border: 2px solid #000000;
 }
 
 scale slider:hover {
-    background: linear-gradient(to bottom, #50BEE6, #3AAED6);
-    box-shadow: 0 3px 12px rgba(80, 190, 230, 0.5), 0 0 20px rgba(80, 190, 230, 0.25);
-    transform: scale(1.1);
+    background-color: #6ABCDC;
 }
 
 scale slider:active {
-    transform: scale(0.95);
+    background-color: #3A9CBE;
 }
 
 scale:disabled trough {
-    background-color: #080E18;
-    border-color: rgba(80, 190, 230, 0.06);
+    background-color: #060A0E;
+    border-color: #111820;
 }
 
 scale:disabled highlight {
-    background: #1A3040;
+    background-color: #1E3040;
 }
 
 scale marks {
-    min-height: 6px;
+    min-height: 4px;
 }
 
 scale value {
@@ -577,39 +547,43 @@ scale value {
 
 /* ── Dropdown / Combobox ─────────────────────────────────────── */
 combobox {
-    color: #D6EEF8;
+    color: #E0EEF4;
     min-height: 36px;
 }
 
 combobox button {
-    background: #04080F;
-    border: 1px solid rgba(80, 190, 230, 0.2);
-    border-radius: 8px;
+    background-color: #080E14;
+    border: 1px solid #1A2C3A;
+    border-radius: 6px;
     padding: 8px 12px;
-    color: #D6EEF8;
+    color: #E0EEF4;
     min-height: 36px;
+    font-weight: 400;
 }
 
 combobox button:hover {
-    border-color: #50BEE6;
-    background: #060C14;
-    box-shadow: 0 0 0 2px rgba(80, 190, 230, 0.12);
+    border-color: #2A4A60;
+    background-color: #0A1418;
+}
+
+combobox button:focus {
+    border-color: #4AACCC;
 }
 
 combobox button:disabled {
-    background-color: #080E18;
-    border-color: rgba(80, 190, 230, 0.06);
-    color: #2A4050;
+    background-color: #060A0E;
+    border-color: #111820;
+    color: #283840;
 }
 
 combobox arrow {
-    color: #8EC6DC;
-    min-height: 16px;
-    min-width: 16px;
+    color: #5A8FA8;
+    min-height: 14px;
+    min-width: 14px;
 }
 
 combobox:hover arrow {
-    color: #50BEE6;
+    color: #4AACCC;
 }
 
 combobox cellview {
@@ -620,11 +594,11 @@ combobox cellview {
 popover,
 menu,
 .menu {
-    background-color: #0B1520;
-    border: 1px solid rgba(80, 190, 230, 0.18);
-    border-radius: 10px;
-    padding: 6px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 40px rgba(30, 90, 130, 0.15);
+    background-color: #060C12;
+    border: 1px solid #1A2C3A;
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 popover>contents {
@@ -634,38 +608,40 @@ popover>contents {
 
 popover modelbutton,
 menuitem {
-    color: #8EC6DC;
-    padding: 8px 12px;
-    border-radius: 6px;
+    color: #B0CCD8;
+    padding: 7px 12px;
+    border-radius: 5px;
     min-height: 32px;
+    font-size: 13px;
 }
 
 popover modelbutton:hover,
 menuitem:hover {
-    background: rgba(80, 190, 230, 0.12);
-    color: #50BEE6;
+    background-color: #0D1E28;
+    color: #E0EEF4;
 }
 
 popover modelbutton:active,
 menuitem:active {
-    background: rgba(80, 190, 230, 0.22);
+    background-color: #0A1820;
+}
+
+popover modelbutton:selected,
+menuitem:selected {
+    background-color: #0F3248;
+    color: #A8D4E8;
 }
 
 popover modelbutton:disabled,
 menuitem:disabled {
-    color: #2A4050;
+    color: #283840;
 }
 
 popover separator,
 menu separator {
-    background: linear-gradient(to right,
-            transparent 0%,
-            rgba(80, 190, 230, 0.12) 20%,
-            rgba(80, 190, 230, 0.18) 50%,
-            rgba(80, 190, 230, 0.12) 80%,
-            transparent 100%);
+    background-color: #1A2C3A;
     min-height: 1px;
-    margin: 4px 0;
+    margin: 3px 6px;
 }
 
 popover arrow {
@@ -680,80 +656,75 @@ scrollbar {
 }
 
 scrollbar.vertical {
-    min-width: 16px;
+    min-width: 12px;
 }
 
 scrollbar.horizontal {
-    min-height: 16px;
+    min-height: 12px;
 }
 
 scrollbar slider {
-    background-color: rgba(80, 190, 230, 0.2);
+    background-color: #1E3040;
     border-radius: 10px;
     margin: 3px;
-    border: none;
-    min-width: 10px;
-    min-height: 40px;
+    min-width: 8px;
+    min-height: 32px;
 }
 
 scrollbar.vertical slider {
-    min-height: 40px;
-    min-width: 10px;
+    min-height: 32px;
+    min-width: 8px;
 }
 
 scrollbar.horizontal slider {
-    min-width: 40px;
-    min-height: 10px;
+    min-width: 32px;
+    min-height: 8px;
 }
 
 scrollbar slider:hover {
-    background-color: rgba(80, 190, 230, 0.38);
+    background-color: #2A4A60;
     margin: 2px;
 }
 
 scrollbar slider:active {
-    background-color: rgba(80, 190, 230, 0.55);
+    background-color: #4AACCC;
     margin: 2px;
 }
 
 scrollbar button {
-    min-height: 16px;
-    min-width: 16px;
+    min-height: 12px;
+    min-width: 12px;
 }
 
 /* ── List & Rows ─────────────────────────────────────────────── */
 list {
     background-color: transparent;
     border: none;
-    padding: 4px;
+    padding: 2px;
 }
 
 listboxrow {
-    background-color: #0B1520;
-    border: 1px solid rgba(80, 190, 230, 0.12);
-    border-radius: 10px;
-    margin: 6px 8px;
-    padding: 12px 16px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    background-color: #08101A;
+    border: 1px solid #1A2C3A;
+    border-radius: 8px;
+    margin: 3px 6px;
+    padding: 10px 14px;
     min-height: 36px;
 }
 
 listboxrow:hover {
-    background-color: #0E1B2A;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 16px rgba(30, 90, 130, 0.15);
-    border-color: rgba(80, 190, 230, 0.25);
+    background-color: #0D1E28;
+    border-color: #2A4050;
 }
 
 listboxrow:selected {
-    background: rgba(13, 64, 96, 0.4);
-    border: 1px solid rgba(80, 190, 230, 0.35);
-    box-shadow: 0 2px 10px rgba(30, 90, 130, 0.35), 0 0 20px rgba(80, 190, 230, 0.08);
-    color: #A0D8EF;
+    background-color: #0F3248;
+    border-color: #2A5A78;
+    color: #A8D4E8;
 }
 
 listboxrow:selected:hover {
-    background: rgba(13, 64, 96, 0.5);
+    background-color: #143C56;
 }
 
 /* ── Notebooks / Tabs ────────────────────────────────────────── */
@@ -763,7 +734,7 @@ notebook {
 
 notebook>header {
     background-color: #000000;
-    border-bottom: 1px solid rgba(80, 190, 230, 0.12);
+    border-bottom: 1px solid #1A2530;
     padding: 0 6px;
     min-height: 40px;
 }
@@ -774,8 +745,8 @@ notebook>header>tabs {
 
 notebook>header>tabs>tab {
     background-color: transparent;
-    color: #4D7A8E;
-    padding: 10px 18px;
+    color: #4A7080;
+    padding: 10px 16px;
     border: none;
     border-bottom: 2px solid transparent;
     border-radius: 0;
@@ -786,15 +757,13 @@ notebook>header>tabs>tab {
 }
 
 notebook>header>tabs>tab:hover {
-    color: #8EC6DC;
-    border-bottom-color: rgba(80, 190, 230, 0.3);
-    background: rgba(80, 190, 230, 0.05);
+    color: #B0CCD8;
+    border-bottom-color: #2A4A60;
 }
 
 notebook>header>tabs>tab:checked {
-    color: #50BEE6;
-    border-bottom: 2px solid #50BEE6;
-    background-color: transparent;
+    color: #4AACCC;
+    border-bottom: 2px solid #4AACCC;
 }
 
 notebook>stack {
@@ -803,93 +772,81 @@ notebook>stack {
 
 /* ── Text View ───────────────────────────────────────────────── */
 textview {
-    background-color: #04080F;
-    color: #D6EEF8;
-    border: 1px solid rgba(80, 190, 230, 0.18);
-    border-radius: 8px;
-    padding: 12px;
-    caret-color: #50BEE6;
+    background-color: #080E14;
+    color: #E0EEF4;
+    border: 1px solid #1A2C3A;
+    border-radius: 6px;
+    padding: 10px;
+    caret-color: #4AACCC;
     min-height: 60px;
 }
 
 textview:focus {
-    border-color: #50BEE6;
-    box-shadow: 0 0 0 2px rgba(80, 190, 230, 0.18);
+    border-color: #4AACCC;
 }
 
 textview:disabled {
-    background-color: #080E18;
-    border-color: rgba(80, 190, 230, 0.06);
-    color: #2A4050;
+    background-color: #060A0E;
+    border-color: #111820;
+    color: #283840;
 }
 
 textview text {
     background-color: transparent;
-    color: #D6EEF8;
+    color: #E0EEF4;
     min-height: 16px;
 }
 
 textview text selection {
-    background-color: rgba(80, 190, 230, 0.25);
-    color: #D6EEF8;
+    background-color: #0F3248;
+    color: #E0EEF4;
 }
 
 /* ── Tooltip ─────────────────────────────────────────────────── */
 tooltip {
-    background-color: #0E1B2A;
-    color: #D6EEF8;
-    border: 1px solid rgba(80, 190, 230, 0.2);
-    border-radius: 8px;
-    padding: 6px 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(30, 90, 130, 0.15);
+    background-color: #0D1E28;
+    color: #E0EEF4;
+    border: 1px solid #1E3040;
+    border-radius: 6px;
+    padding: 5px 10px;
     font-size: 12px;
 }
 
 tooltip label {
-    color: #D6EEF8;
+    color: #E0EEF4;
     min-height: 16px;
 }
 
 /* ── Separators ──────────────────────────────────────────────── */
 separator {
-    background: linear-gradient(to right,
-            transparent 0%,
-            rgba(80, 190, 230, 0.12) 20%,
-            rgba(80, 190, 230, 0.18) 50%,
-            rgba(80, 190, 230, 0.12) 80%,
-            transparent 100%);
+    background-color: #1A2530;
     min-height: 1px;
-    margin: 6px 0;
+    margin: 4px 0;
 }
 
 separator.vertical {
-    background: linear-gradient(to bottom,
-            transparent 0%,
-            rgba(80, 190, 230, 0.12) 20%,
-            rgba(80, 190, 230, 0.18) 50%,
-            rgba(80, 190, 230, 0.12) 80%,
-            transparent 100%);
+    background-color: #1A2530;
     min-width: 1px;
-    margin: 0 6px;
+    margin: 0 4px;
 }
 
 /* ── Frames ──────────────────────────────────────────────────── */
 frame {
-    border: 1px solid rgba(80, 190, 230, 0.15);
-    border-radius: 10px;
+    border: 1px solid #1A2C3A;
+    border-radius: 8px;
     padding: 2px;
 }
 
 frame>border {
-    border: 1px solid rgba(80, 190, 230, 0.15);
-    border-radius: 10px;
+    border: 1px solid #1A2C3A;
+    border-radius: 8px;
     padding: 0;
 }
 
 /* ── Toolbar ─────────────────────────────────────────────────── */
 toolbar {
-    background: #000000;
-    border-bottom: 1px solid rgba(80, 190, 230, 0.1);
+    background-color: #000000;
+    border-bottom: 1px solid #1A2530;
     padding: 4px 6px;
     min-height: 40px;
 }
@@ -897,8 +854,8 @@ toolbar {
 /* ── Status Bar ──────────────────────────────────────────────── */
 statusbar {
     background-color: #000000;
-    color: #4D7A8E;
-    border-top: 1px solid rgba(80, 190, 230, 0.1);
+    color: #4A7080;
+    border-top: 1px solid #1A2530;
     font-size: 12px;
     padding: 4px 12px;
     min-height: 28px;
@@ -906,34 +863,34 @@ statusbar {
 
 /* ── Infobar ─────────────────────────────────────────────────── */
 infobar {
-    border-radius: 8px;
-    margin: 8px;
+    border-radius: 6px;
+    margin: 6px;
     padding: 8px;
     min-height: 36px;
 }
 
 infobar.info {
-    background-color: rgba(80, 190, 230, 0.1);
-    border: 1px solid rgba(80, 190, 230, 0.25);
-    color: #50BEE6;
+    background-color: #081824;
+    border: 1px solid #1A3A50;
+    color: #6AACCC;
 }
 
 infobar.error {
-    background-color: rgba(200, 60, 50, 0.12);
-    border: 1px solid rgba(200, 60, 50, 0.28);
-    color: #D08888;
+    background-color: #180808;
+    border: 1px solid #3A1818;
+    color: #C08080;
 }
 
 infobar.warning {
-    background-color: rgba(200, 150, 30, 0.12);
-    border: 1px solid rgba(200, 150, 30, 0.28);
-    color: #D4A850;
+    background-color: #181008;
+    border: 1px solid #3A2A10;
+    color: #C0A060;
 }
 
 infobar.success {
-    background-color: rgba(30, 100, 130, 0.15);
-    border: 1px solid rgba(30, 100, 130, 0.3);
-    color: #A0D8EF;
+    background-color: #081818;
+    border: 1px solid #1A3A30;
+    color: #60A090;
 }
 
 /* ── Expander ────────────────────────────────────────────────── */
@@ -942,67 +899,50 @@ expander {
 }
 
 expander title {
-    color: #8EC6DC;
+    color: #B0CCD8;
     font-weight: 500;
     min-height: 32px;
 }
 
 expander title:hover {
-    color: #50BEE6;
+    color: #E0EEF4;
 }
 
 expander title arrow {
-    color: #50BEE6;
-    min-height: 16px;
-    min-width: 16px;
+    color: #4AACCC;
+    min-height: 14px;
+    min-width: 14px;
 }
 
 /* ── Sidebar ─────────────────────────────────────────────────── */
 .sidebar {
     background-color: #000000;
-    border-right: 1px solid rgba(80, 190, 230, 0.1);
+    border-right: 1px solid #1A2530;
 }
 
 /* ── Paned Separator ─────────────────────────────────────────── */
 paned>separator {
-    background-color: rgba(80, 190, 230, 0.1);
+    background-color: #1A2530;
     min-width: 1px;
     min-height: 1px;
 }
 
 paned>separator:hover {
-    background-color: rgba(80, 190, 230, 0.22);
+    background-color: #2A4050;
 }
 
 paned>separator.wide {
-    min-width: 6px;
-    min-height: 6px;
-}
-
-/* ── Link Button ─────────────────────────────────────────────── */
-button.link {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    color: #50BEE6;
-    text-decoration: underline;
-    padding: 0 4px;
-    min-height: 24px;
-}
-
-button.link:hover {
-    color: #78CEEE;
-    background: transparent;
-    box-shadow: none;
+    min-width: 4px;
+    min-height: 4px;
 }
 
 /* ── Selection ───────────────────────────────────────────────── */
 selection {
-    background-color: rgba(80, 190, 230, 0.25);
-    color: #D6EEF8;
+    background-color: #0F3248;
+    color: #E0EEF4;
 }
 
-/* ── Backdrop State ──────────────────────────────────────────── */
+/* ── Backdrop ────────────────────────────────────────────────── */
 window:backdrop {
     opacity: 0.95;
     background-color: #000000;
@@ -1010,14 +950,14 @@ window:backdrop {
 
 /* ── Spinner ─────────────────────────────────────────────────── */
 spinner {
-    color: #50BEE6;
+    color: #4AACCC;
     opacity: 1;
     min-height: 16px;
     min-width: 16px;
 }
 
 spinner:disabled {
-    color: #2A4050;
+    color: #283840;
     opacity: 0.5;
 }
 
@@ -1027,24 +967,10 @@ image {
     min-width: 16px;
 }
 
-/* ── Box & Grid ──────────────────────────────────────────────── */
-box {
-    min-height: 0;
-    min-width: 0;
-}
-
-grid {
-    min-height: 0;
-    min-width: 0;
-}
-
-/* ── Overlay ─────────────────────────────────────────────────── */
-overlay {
-    min-height: 0;
-    min-width: 0;
-}
-
-/* ── Stack ───────────────────────────────────────────────────── */
+/* ── Box, Grid, Overlay, Stack ───────────────────────────────── */
+box,
+grid,
+overlay,
 stack {
     min-height: 0;
     min-width: 0;
@@ -1057,5 +983,5 @@ colorswatch {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   DEEP ORBIT — End of stylesheet
+   NIGHT — End of stylesheet
    ══════════════════════════════════════════════════════════════ */
