@@ -71,7 +71,7 @@ mod imp {
 
             glib::timeout_add_local(std::time::Duration::from_millis(500), glib::clone!(@weak obj => @default-return glib::ControlFlow::Break, move || {
                 if let Ok(_) = receiver.try_recv() {
-                    obj.check_for_updates();
+                    obj.check_for_updates(None);
                 }
                 glib::ControlFlow::Continue
             }));
@@ -81,7 +81,7 @@ mod imp {
             obj.setup_css();
             obj.setup_callbacks();
 
-            obj.check_for_updates();
+            obj.check_for_updates(None);
         }
     }
 
@@ -122,7 +122,7 @@ impl UpdaterWindow {
         }));
 
         self.imp().refresh_button.connect_clicked(glib::clone!(@weak self as obj => move |_| {
-            obj.check_for_updates();
+            obj.check_for_updates(None);
         }));
 
         self.imp().updateall_button.connect_clicked(glib::clone!(@weak self as obj => move |_| {
@@ -157,11 +157,18 @@ impl UpdaterWindow {
                     .output()
                 {
                     Ok(output) => {
-                        println!("all packages updating");
-                        println!("Status: {}", output.status);
-                        println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
-                        println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
-                        sender.send(true).unwrap();
+
+                        if output.status.success() {
+                            println!("all packages updating");
+                            println!("Status: {}", output.status);
+                            println!("Stdout: {}", String::from_utf8_lossy(&output.stdout));
+                            println!("Stderr: {}", String::from_utf8_lossy(&output.stderr));
+                            sender.send(true).unwrap();
+
+                    }    else {
+                            eprintln!("Command failed to execute");
+                            sender.send(false).unwrap();
+                        }
                     }
                     Err(e) => {
                         eprintln!("Command failed to execute: {}", e);
@@ -189,7 +196,7 @@ impl UpdaterWindow {
         else {
             println!("System is up to date");
             imp.label.set_text("System is up to date, checking for new updates...");
-            self.check_for_updates();
+            self.check_for_updates(None);
         }
     }
 
@@ -202,9 +209,9 @@ impl UpdaterWindow {
 
     fn failed_update(&self) {
         let imp = self.imp();
-        imp.label.set_text("Update Failed");
+        imp.label.set_text("Update Failed, read the log");
         imp.updateall_button.set_sensitive(true);
-        self.clear_list();
+        self.check_for_updates(Some(true));
     }
 
     fn disable_all_row_buttons(&self) {
@@ -241,13 +248,17 @@ impl UpdaterWindow {
         } 
     }
 
-    fn check_for_updates(&self) {
+    fn check_for_updates(&self, flag: Option<bool>) {
         let imp = self.imp();
-        imp.label.set_text("Checking...");
+        let updlabel = flag.unwrap_or(true);
+   
         
-        // Clear the existing list before starting a new check
+        
         self.clear_list();
-        imp.label.set_text("Checking...");
+        
+        if updlabel == false {
+            imp.label.set_text("Checking...");
+        }
 
         let (sender, receiver) = std::sync::mpsc::channel::<String>();
         UpdateManager::check_updates(sender);
@@ -255,7 +266,12 @@ impl UpdaterWindow {
         glib::timeout_add_local(std::time::Duration::from_millis(100),
             glib::clone!(@weak self as obj => @default-return glib::ControlFlow::Break, move || {
                 if let Ok(result_string) = receiver.try_recv() {
-                    obj.handle_update_result(result_string);
+                    if updlabel == false {
+                        obj.handle_update_result(result_string, Some(false));
+                    } else {
+                        obj.handle_update_result(result_string, Some(true));
+                    }
+                    
                     glib::ControlFlow::Break
                 } else {
                     glib::ControlFlow::Continue
@@ -264,14 +280,21 @@ impl UpdaterWindow {
         );
     }
 
-    fn handle_update_result(&self, result_string: String) {
+    fn handle_update_result(&self, result_string: String, flag: Option<bool>) {
         let imp = self.imp();
-        
+        let option = flag.unwrap_or(true);
+
         if result_string.trim().is_empty() {
-            imp.label.set_text("System up to date");
+            if option == true {
+                imp.label.set_text("System up to date");
+            }
+
             imp.updates_avaible.set(false);
         } else {
-            imp.label.set_text("Updates found!");
+            if option == true {
+                imp.label.set_text("Updates found!");
+            }
+           
             imp.updates_avaible.set(true);
             
             for line in result_string.lines() {
