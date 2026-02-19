@@ -266,7 +266,7 @@ impl UpdaterWindow {
         glib::timeout_add_local(std::time::Duration::from_millis(100),
             glib::clone!(@weak self as obj => @default-return glib::ControlFlow::Break, move || {
                 if let Ok(result_string) = receiver.try_recv() {
-                    if updlabel == false {
+                    if updlabel == true {
                         obj.handle_update_result(result_string, Some(false));
                     } else {
                         obj.handle_update_result(result_string, Some(true));
